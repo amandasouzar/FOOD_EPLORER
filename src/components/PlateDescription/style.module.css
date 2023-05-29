@@ -1,0 +1,53 @@
+.plateInfo {
+  font-family: "Poppins", sans-serif;
+  color: #e1e1e6;
+
+  padding: 16px 56px 30px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+.plateName {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 140%;
+
+  margin: 16px 0 24px;
+}
+
+.plateDescription {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+
+  margin-bottom: 24px;
+}
+
+.plateIngredients {
+  padding: 0 28px;
+
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  min-width: 300px;
+}
+
+.plateIngredient {
+  padding: 4px 8px;
+  background: #192227;
+  border-radius: 5px;
+
+  font-size: 12px;
+}
+
+.plateImg {
+  width: 110px;
+  height: 110px;
+}

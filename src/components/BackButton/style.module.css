@@ -1,0 +1,21 @@
+.backButton {
+  padding: 30px 32px 0 32px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.backButton h2 {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+
+  color: #e1e1e6;
+}
+
+.backImg:hover {
+  cursor: pointer;
+}

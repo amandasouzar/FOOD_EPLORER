@@ -1,0 +1,25 @@
+.quantityButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.quantityButton h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 160%;
+
+  color: #e1e1e6;
+}
+
+.img {
+  background: transparent;
+  border: none;
+}
+
+.img:hover {
+  cursor: pointer;
+}

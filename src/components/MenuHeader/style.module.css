@@ -1,0 +1,27 @@
+.menuBox {
+  padding: 56px 28px 24px;
+  background: #001119;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.menuText {
+  font-family: "Roboto", sans-serif;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 21.1629px;
+  line-height: 25px;
+}
+
+.closeLogo:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.button {
+  border: none;
+  background: none;
+}

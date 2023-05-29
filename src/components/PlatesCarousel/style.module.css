@@ -1,0 +1,59 @@
+.platesList {
+  padding: 24px;
+}
+
+.carrouselWithTitle h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 140%;
+
+  text-align: center;
+  padding-top: 24px;
+
+  color: #e1e1e6;
+}
+
+.plateCarousel {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  width: 100%;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.plateCarousel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.plateCarousel::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #01182e;
+  border: 1px solid #01182e;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+}
+
+.plateCarousel::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #363636;
+  padding: 10px;
+}
+
+.plateCarousel h3 {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+
+  color: #e1e1e6;
+}

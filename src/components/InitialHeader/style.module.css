@@ -1,0 +1,21 @@
+.headerDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: nowrap;
+
+  gap: 10px;
+  padding: 150px 45px 0px 45px;
+}
+
+.headerDiv h1 {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 44px;
+
+  color: #ffffff;
+}

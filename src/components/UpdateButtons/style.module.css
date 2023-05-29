@@ -1,0 +1,44 @@
+.buttonsDiv {
+  padding: 0 32px;
+  margin-bottom: 50px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.deleteButton,
+.updateButton {
+  padding: 12px 15px;
+
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+
+  color: #ffffff;
+}
+
+.deleteButton {
+  background: #0d161b;
+  border-radius: 5px;
+  border: none;
+}
+
+.updateButton {
+  background: #ab4d55;
+  border-radius: 5px;
+  border: none;
+}
+
+.deleteButton:hover {
+    cursor: pointer;
+    background-color: #1d323d;
+}
+
+.updateButton:hover {
+    cursor: pointer;
+    background-color: #813c41;
+}

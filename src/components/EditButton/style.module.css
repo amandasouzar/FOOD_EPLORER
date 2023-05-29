@@ -1,0 +1,33 @@
+.editButton {
+  padding: 0 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  padding: 10px 100px;
+
+  background: #750310;
+  border-radius: 5px;
+  border: none;
+
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #ffffff;
+
+  white-space: nowrap;
+}
+
+.button:hover {
+  cursor: pointer;
+  background: #ad0519;
+}

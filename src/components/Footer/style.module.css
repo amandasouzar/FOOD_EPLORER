@@ -1,0 +1,32 @@
+.footer {
+  background: #00111a;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 30.5px 27px;
+}
+
+.logoBox {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+
+  color: #4d585e;
+
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+.rigthBox {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+
+
+  color: #fffaf1;
+}

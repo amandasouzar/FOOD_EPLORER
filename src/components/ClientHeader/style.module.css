@@ -1,0 +1,50 @@
+
+  .header {
+    padding: 56px 28px 24px 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+    gap: 60px;
+    justify-content: space-between;
+        
+    font-family: "Roboto", sans-serif;
+    background: #001119;
+  }
+  
+  .titleDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+  }
+  
+  .title {
+    font-weight: 700;
+    font-size: 21.1629px;
+    line-height: 25px;
+  
+    color: #ffffff;
+    align-items: center;
+  }
+
+  .cartDiv {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: left;
+  }
+
+  .cartDiv p {
+    position: absolute;
+
+    background: purple;
+    padding: 1px;
+    border-radius: 50%;
+    color: white;
+  }
+  
+  .MenuIcon:hover, .CartIcon:hover {
+      cursor: pointer;
+      filter: brightness(3);
+  }
+  

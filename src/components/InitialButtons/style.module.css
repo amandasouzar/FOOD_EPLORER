@@ -1,0 +1,49 @@
+.buttonsDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 0 45px;
+  gap: 32px;
+
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.redButton {
+  background: #750310;
+  border-radius: 5px;
+  border: none;
+
+  color: white;
+
+  padding: 12px 100px;
+}
+
+.clearButton {
+    background: none;
+    color: white;
+    border: none;
+}
+
+.redButton, .clearButton:hover {
+    cursor: pointer;
+}
+
+.redButton:hover {
+  background: #b7051a;
+}
+.clearButton:hover {
+    text-decoration: underline;
+}
+
+.linkDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.redButton:disabled {
+  background-color: grey;
+  cursor: default;
+}
