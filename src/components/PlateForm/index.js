@@ -1,6 +1,7 @@
 import styles from "./style.module.css";
 import { DownloadIcon } from "../../assets/DownloadIcon";
 import { useState, useEffect, useRef } from "react";
+import { useReq } from "../../hooks/useReq";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -47,6 +48,8 @@ export const PlateForm = (props) => {
   const inputCategory = useRef(null);
   const inputIngredient = useRef(null);
 
+  const { getReq, postReq, putReq } = useReq();
+
   const {
     register,
     handleSubmit,
@@ -58,20 +61,14 @@ export const PlateForm = (props) => {
   const onSubmitHandler = async (data) => {
     try {
       if (props.create) {
-        const response = await fetch("http://localhost:3003/plates/create/1", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            admin_id: 1,
-            name: data.plateName,
-            category_id: data.category_id,
-            description: data.description,
-            price: data.price,
-            image: "#",
-            ingredientsId: addedItens,
-          }),
+        const response = await postReq("http://localhost:3003/plates/create", {
+          admin_id: 1,
+          name: data.plateName,
+          category_id: data.category_id,
+          description: data.description,
+          price: data.price,
+          image: "#",
+          ingredientsId: addedItens,
         });
 
         if (!response.ok) {
@@ -90,45 +87,41 @@ export const PlateForm = (props) => {
         }
       } else {
         try {
-          const response = await fetch('http://localhost:3003/plates/update/' + props.plate_id, {
-              method: 'PUT',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                admin_id: 1,
-                name: data.plateName,
-                category_id: data.category_id,
-                description: data.description,
-                price: data.price,
-                image: "#",
-                addedItens: addedItens,
-                removedItens: removedItens,
-              })
-          })
+          const response = await putReq(
+            "http://localhost:3003/plates/update/" + props.plate_id,
+            {
+              admin_id: 1,
+              name: data.plateName,
+              category_id: data.category_id,
+              description: data.description,
+              price: data.price,
+              image: "#",
+              addedItens: addedItens,
+              removedItens: removedItens,
+            }
+          );
 
           if (!response.ok) {
-              console.log(response)
+            console.log(response);
           } else {
-              const jsonResponse = await response.json()
-              setSnackbarMessage(jsonResponse.message)
-              setTimeout(() => {
-                  window.location.href = '/admin/home'
-              }, 3000)
+            const jsonResponse = await response.json();
+            setSnackbarMessage(jsonResponse.message);
+            setTimeout(() => {
+              window.location.href = "/admin/home";
+            }, 3000);
           }
-      } catch (err) {
-          console.log(err)
-      }
+        } catch (err) {
+          console.log(err);
+        }
       }
     } catch (err) {
       console.log(err);
     }
   };
-  // O ADMINID ESTÁ ESTÁTICO, PRECISA MUDAR
 
   const fetchDataFromPlate = async () => {
     try {
-      const response = await fetch(
+      const response = await getReq(
         "http://localhost:3003/plates/get/" + props.plate_id
       );
       if (!response.ok) {
@@ -149,7 +142,7 @@ export const PlateForm = (props) => {
 
   const fetchCategory = async (id) => {
     try {
-      const response = await fetch("http://localhost:3003/categories/" + id);
+      const response = await getReq("http://localhost:3003/categories/" + id);
       if (!response.ok) {
         console.log("Something went wrong");
       } else {
@@ -164,18 +157,17 @@ export const PlateForm = (props) => {
   const handleIngredientAdd = (event) => {
     event.preventDefault();
 
-    const isAdded = addedItens.find((id) => id === +(event.target.value));
+    const isAdded = addedItens.find((id) => id === +event.target.value);
 
     if (isAdded === undefined) {
-      setAddedItens((prevArray) => [...prevArray, +(event.target.value)]);
+      setAddedItens((prevArray) => [...prevArray, +event.target.value]);
     } else {
       setAddedItens((prevArray) =>
-        prevArray.filter((id) => id != +(event.target.value))
+        prevArray.filter((id) => id != +event.target.value)
       );
-      setRemovedItens((prevArray) => [...prevArray, +event.target.value])
+      setRemovedItens((prevArray) => [...prevArray, +event.target.value]);
     }
   };
-
 
   const toggleAddCategoryButton = (event) => {
     setOpenAddCategoryBox((prevValue) => !prevValue);
@@ -187,15 +179,12 @@ export const PlateForm = (props) => {
 
   const handleNewCategory = async () => {
     try {
-      const response = await fetch("http://localhost:3003/categories/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await postReq(
+        "http://localhost:3003/categories/create",
+        {
           name: inputCategory.current.value,
-        }),
-      });
+        }
+      );
 
       if (response.ok) {
         const jsonResponse = await response.json();
@@ -212,15 +201,12 @@ export const PlateForm = (props) => {
 
   const handleNewIngredient = async () => {
     try {
-      const response = await fetch("http://localhost:3003/ingredients/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const response = await postReq(
+        "http://localhost:3003/ingredients/create",
+        {
           name: inputIngredient.current.value,
-        }),
-      });
+        }
+      );
 
       if (response.ok) {
         const jsonResponse = await response.json();
@@ -241,7 +227,12 @@ export const PlateForm = (props) => {
       fetchCategory(plateData.plate[0].category_id);
     }
     if (!props.create && plateData.ingredients) {
-      plateData.ingredients.map(element => {return setAddedItens(prevArray => [...prevArray, element.ingredient_id])})
+      plateData.ingredients.map((element) => {
+        return setAddedItens((prevArray) => [
+          ...prevArray,
+          element.ingredient_id,
+        ]);
+      });
     }
   }, [responseStatus]);
 
@@ -265,8 +256,6 @@ export const PlateForm = (props) => {
       </>
     );
   } else {
-    console.log(addedItens)
-    console.log(removedItens)
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
         <h1>{props.title}</h1>

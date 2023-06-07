@@ -1,17 +1,18 @@
 import styles from './style.module.css'
 import { Snackbar } from "@mui/material";
 import { useState } from 'react';
+import { useReq } from '../../hooks/useReq';
 
 export const UpdateButtons = (props) => {
 
     const [snackbarMessage, setSnackbarMessage] = useState()
 
+    const {deleteReq} = useReq()
+
     const handleDeletePlate = async() => {
 
         try {
-            const response = await fetch('http://localhost:3003/plates/delete/' + props.plate_id, {
-                method: 'DELETE'
-            })
+            const response = await deleteReq('http://localhost:3003/plates/delete/' + props.plate_id)
 
             if (!response.ok) {
                 console.log(response)

@@ -1,0 +1,39 @@
+.orderRecordItem {
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 20px;
+
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+
+  color: #c4c4cc;
+
+  border: 2px solid #192227;
+  border-radius: 8px;
+}
+
+.topLine {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+
+  margin-bottom: 16px;
+}
+
+.platesList ul {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.platesList li {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+}

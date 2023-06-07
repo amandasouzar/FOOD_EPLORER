@@ -4,7 +4,14 @@ import { DefaultClient } from "../DefaultClient";
 export const ClientMenu = () => {
   return (
     <DefaultClient isMenu={true}>
-      <MenuList items={[{title: 'Sair', link: '/'}]} />
+      <MenuList
+        isAdmin={false}
+        items={[
+          { title: "Histórico de pedidos", link: "/history" },
+          { title: "Meus favoritos", link: "/favorites" },
+          { title: "Sair", link: "/" },
+        ]}
+      />
     </DefaultClient>
   );
 };

@@ -1,17 +1,18 @@
 import styles from "./style.module.css";
 import { PlateBox } from "../PlateBox/index.js";
 import { useEffect, useState } from "react";
+import { useReq } from "../../hooks/useReq";
 
 export const PlatesCarousel = (props) => {
 
-  const [platesOfCategory, setPlatesOfCategory] = useState([]);
+  const {getReq} = useReq()
 
-  
+  const [platesOfCategory, setPlatesOfCategory] = useState([]);
 
   const fetchPlatesFromCategory = async (category) => {
     try {
-      const response = await fetch(
-        "http://localhost:3003/plates/" + category.id
+      const response = await getReq(
+        "http://localhost:3003/plates/category/" + category.id
       );
 
       if (!response.ok) {

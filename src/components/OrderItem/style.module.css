@@ -1,0 +1,61 @@
+.orderItemBox {
+  display: flex;
+  flex-direction: row;
+  gap: 13px;
+
+  align-items: center;
+
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.topLine h2 {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 160%;
+
+  color: #e1e1e6;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.topLine {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  align-items: center;
+}
+
+.topLine p {
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+
+  color: #c4c4cc;
+}
+
+.infoBox button {
+  background: none;
+  border: none;
+  text-align: left;
+
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+
+  color: #ab4d55;
+}
+
+.infoBox button:hover {
+    cursor: pointer;
+}

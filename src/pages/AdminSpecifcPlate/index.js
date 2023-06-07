@@ -3,6 +3,7 @@ import { PlateDescription } from "../../components/PlateDescription";
 import { EditButton } from "../../components/EditButton";
 import { DefaultAdmin } from "../DefaultAdmin";
 import { Link } from "react-router-dom";
+import { useReq } from "../../hooks/useReq";
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -17,9 +18,11 @@ export const AdminSpecificPlate = () => {
 
   const [snackbarMessage, setSnackbarMessage] = useState();
 
+  const {getReq} = useReq()
+
   const fetchDataFromPlate = async () => {
     try {
-      const response = await fetch(
+      const response = await getReq(
         "http://localhost:3003/plates/get/" + plate_id
       );
 
@@ -41,7 +44,7 @@ export const AdminSpecificPlate = () => {
 
   const findIngredients = async (id) => {
     try {
-      const response = await fetch("http://localhost:3003/ingredients/" + id);
+      const response = await getReq("http://localhost:3003/ingredients/" + id);
 
       if (!response.ok) {
         console.log(response);

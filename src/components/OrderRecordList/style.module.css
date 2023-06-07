@@ -1,0 +1,21 @@
+.orderRecordList {
+  padding: 56px 35px;
+}
+
+.orderRecordList h1 {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 140%;
+
+  color: #e1e1e6;
+
+  margin-bottom: 17px;
+}
+
+.itens {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}

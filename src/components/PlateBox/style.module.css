@@ -40,6 +40,15 @@
   fill: white;
 }
 
+.filledImg {
+  fill: white;
+}
+
+.filledImg:hover {
+  cursor: pointer;
+  fill: none;
+}
+
 .plateInfos {
   display: flex;
   flex-direction: column;

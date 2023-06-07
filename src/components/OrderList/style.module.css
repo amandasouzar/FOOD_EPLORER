@@ -1,0 +1,56 @@
+.orderList {
+  padding-top: 34px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: "Poppins", sans-serif;
+
+  color: #e1e1e6;
+}
+
+.orderList h1 {
+  font-size: 32px;
+  line-height: 140%;
+  font-weight: 500;
+
+  text-align: left;
+  margin-bottom: 27px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 500;
+
+  text-align: left;
+  margin-bottom: 27px;
+}
+
+.orderItens {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 10px;
+}
+
+.redButton {
+  background: #750310;
+  border-radius: 5px;
+  border: none;
+
+  padding: 12px 78px;
+
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+
+  color: #ffffff;
+}
+
+.redButton:hover {
+  cursor: pointer;
+  background: #b7051a;
+}
