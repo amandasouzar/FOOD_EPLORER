@@ -18,10 +18,12 @@ import { AdminHome } from "./pages/AdminHome";
 import { Order } from "./pages/Order";
 import { OrderRecord } from "./pages/OrderRecord";
 import { Favorites } from "./pages/Favorites";
+import { NotFoundPage } from "./pages/404";
 
 const App = () => {
   const [ingredients, setIngredients] = useState({});
   const [categories, setCategories] = useState({});
+  const [isAdmin, setIsAdmin] = useState();
 
   const { getReq } = useReq();
 
@@ -56,10 +58,25 @@ const App = () => {
   };
 
   const { user, setUser } = useAuth();
+  const checkIsAdmin = async () => {
+    try {
+      const response = await getReq("http://localhost:3003/session/check");
+
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        const jsonResponse = await response.json();
+        setIsAdmin(jsonResponse.isAdmin);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     fetchIngredients();
     fetchCategories();
+    checkIsAdmin();
   }, []);
 
   return (
@@ -68,18 +85,22 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
-          <Route
-            path="/home"
-            element={<ClientHome categories={categories} />}
-          ></Route>
-          <Route path="/order" element={<Order />}></Route>
-          <Route path="/favorites" element={<Favorites />}></Route>
-          <Route path="/history" element={<OrderRecord />}></Route>
-          <Route path="/client/menu" element={<ClientMenu />}></Route>
-          <Route
-            path="/client/:plate_id"
-            element={<ClientSpecificPlate />}
-          ></Route>
+          {!isAdmin && (
+            <>
+              <Route
+                path="/home"
+                element={<ClientHome categories={categories} />}
+              ></Route>
+              <Route path="/order" element={<Order />}></Route>
+              <Route path="/favorites" element={<Favorites />}></Route>
+              <Route path="/history" element={<OrderRecord />}></Route>
+              <Route path="/client/menu" element={<ClientMenu />}></Route>
+              <Route
+                path="/client/:plate_id"
+                element={<ClientSpecificPlate />}
+              ></Route>
+            </>
+          )}
           <Route
             path="/admin/home"
             element={<AdminHome categories={categories} />}
@@ -101,6 +122,7 @@ const App = () => {
               <UpdatePlate ingredients={ingredients} categories={categories} />
             }
           ></Route>
+          <Route path="*" element={<NotFoundPage isAdmin={isAdmin} />}></Route>
         </Routes>
       </div>
     </AuthContext.Provider>

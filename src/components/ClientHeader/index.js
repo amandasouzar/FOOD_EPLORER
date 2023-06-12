@@ -3,9 +3,37 @@ import { MenuIcon } from "../../assets/MenuIcon";
 import { LogoHexagon } from "../../assets/LogoHexagon";
 import { CartLogo } from "../../assets/CartLogo";
 import { Link } from "react-router-dom";
+import { useReq } from "../../hooks/useReq";
+import { useEffect, useState } from "react";
 
 export const ClientHeader = (props) => {
+  const { getReq } = useReq();
+  const [quantity, setQuantity] = useState(0);
 
+  const fetchQuantity = async () => {
+    try {
+      const response = await getReq(
+        "http://localhost:3003/orders/clientOrders"
+      );
+
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        const jsonResponse = await response.json();
+        if (jsonResponse.message.platesFromOrder.length > 0) {
+            for (const plate of jsonResponse.message.platesFromOrder) {
+              setQuantity((quantity) => quantity + plate.quantity)
+            }
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuantity();
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -19,7 +47,7 @@ export const ClientHeader = (props) => {
       <Link to="/order">
         <div className={styles.cartDiv}>
           <CartLogo className={styles.CartIcon} />
-          <p></p>
+          <p>{quantity}</p>
         </div>
       </Link>
     </header>

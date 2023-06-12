@@ -1,15 +1,22 @@
-import styles from './style.module.css'
+import styles from "./style.module.css";
 
 export const OrderItem = (props) => {
-    return <div className={styles.orderItemBox}>
-        <img src='#'></img>
-        <div className={styles.infoBox}>
-            <div className={styles.topLine}>
-                <h2>x1</h2>
-                <h2>Salada Radish</h2>
-                <p>R$25.99</p>
-            </div>
-            <button>Excluir</button>
+
+    const handleDeleteItem = () => {
+        props.handleDeleteItem(props.item.id)
+    }
+
+  return (
+    <div className={styles.orderItemBox}>
+      <img src="#"></img>
+      <div className={styles.infoBox}>
+        <div className={styles.topLine}>
+          <h2>x{props.item.quantity}</h2>
+          <h2>{props.item.name}</h2>
+          <p>R${props.item.price}</p>
         </div>
+        <button onClick={handleDeleteItem}>Excluir</button>
+      </div>
     </div>
-}
+  );
+};

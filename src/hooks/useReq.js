@@ -26,6 +26,17 @@ export const useReq = () => {
       return response;
   }
 
+  const postFormData = async (url, body) => {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          'Authorization': token,
+        },
+        body
+      });
+      return response;
+  }
+
   const putReq = async (url, body) => {
     const response = await fetch(url, {
         method: "PUT",
@@ -34,6 +45,17 @@ export const useReq = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
+      });
+      return response;
+  }
+
+  const putFormData = async (url, body) => {
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          'Authorization': token,
+        },
+        body
       });
       return response;
   }
@@ -48,5 +70,5 @@ export const useReq = () => {
     return response;
   };
 
-  return { getReq, postReq, putReq, deleteReq };
+  return { getReq, postReq, putReq, deleteReq, postFormData, putFormData };
 };

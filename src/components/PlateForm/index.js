@@ -3,7 +3,7 @@ import { DownloadIcon } from "../../assets/DownloadIcon";
 import { useState, useEffect, useRef } from "react";
 import { useReq } from "../../hooks/useReq";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { CreateButton } from "../CreateButton";
@@ -28,9 +28,6 @@ const schema = yup.object({
     .required("Adicione uma descrição."),
 });
 
-// perguntar sobre o "input" que é um button
-// perguntar sobre input file
-
 export const PlateForm = (props) => {
   const [addedItens, setAddedItens] = useState([]);
   const [removedItens, setRemovedItens] = useState([]);
@@ -43,33 +40,45 @@ export const PlateForm = (props) => {
   const [openAddCategoryBox, setOpenAddCategoryBox] = useState(false);
   const [openAddIngredientBox, setOpenAddIngredientBox] = useState(false);
 
+  const [allCategories, setAllCategories] = useState();
+  const [allIngredients, setAllIngredients] = useState();
+
   const [snackbarmessage, setSnackbarMessage] = useState();
 
   const inputCategory = useRef(null);
   const inputIngredient = useRef(null);
 
-  const { getReq, postReq, putReq } = useReq();
+  const { getReq, postReq, postFormData } = useReq();
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const watchedPlateImg = useWatch({
+    control,
+    name: "plateImg",
+  });
 
   const onSubmitHandler = async (data) => {
+    const formData = new FormData();
+    formData.append("file", data.plateImg[0]);
+    formData.append("name", JSON.stringify(data.plateName));
+    formData.append("category_id", JSON.stringify(data.category_id));
+    formData.append("description", JSON.stringify(data.description));
+    formData.append("price", JSON.stringify(data.price));
+    formData.append("ingredientsId", JSON.stringify(addedItens));
+    formData.append("removedItens", JSON.stringify(removedItens));
+
     try {
       if (props.create) {
-        const response = await postReq("http://localhost:3003/plates/create", {
-          admin_id: 1,
-          name: data.plateName,
-          category_id: data.category_id,
-          description: data.description,
-          price: data.price,
-          image: "#",
-          ingredientsId: addedItens,
-        });
+        const response = await postFormData(
+          "http://localhost:3003/plates/create",
+          formData
+        );
 
         if (!response.ok) {
           console.log(response);
@@ -87,18 +96,9 @@ export const PlateForm = (props) => {
         }
       } else {
         try {
-          const response = await putReq(
+          const response = await postFormData(
             "http://localhost:3003/plates/update/" + props.plate_id,
-            {
-              admin_id: 1,
-              name: data.plateName,
-              category_id: data.category_id,
-              description: data.description,
-              price: data.price,
-              image: "#",
-              addedItens: addedItens,
-              removedItens: removedItens,
-            }
+            formData
           );
 
           if (!response.ok) {
@@ -191,6 +191,10 @@ export const PlateForm = (props) => {
         if (jsonResponse.status >= 400) {
           setSnackbarMessage(jsonResponse.message);
         } else {
+          setAllCategories((prevArray) => [
+            ...prevArray,
+            { name: inputCategory.current.value, id: jsonResponse.id },
+          ]);
           setSnackbarMessage("Categoria adicionada!");
         }
       }
@@ -213,12 +217,21 @@ export const PlateForm = (props) => {
         if (jsonResponse.status >= 400) {
           setSnackbarMessage(jsonResponse.message);
         } else {
+          setAllIngredients((prevArray) => [
+            ...prevArray,
+            { name: inputIngredient.current.value, id: jsonResponse.id },
+          ]);
           setSnackbarMessage("Ingrediente adicionado!");
         }
       }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleSettingStates = (categories, ingredients) => {
+    setAllCategories(categories);
+    setAllIngredients(ingredients);
   };
 
   useEffect(() => {
@@ -234,12 +247,19 @@ export const PlateForm = (props) => {
         ]);
       });
     }
+
+    if (
+      props.categories[0] !== undefined &&
+      props.ingredients[0] !== undefined
+    ) {
+      handleSettingStates(props.categories, props.ingredients);
+    }
   }, [responseStatus]);
 
   if (
     !plateData ||
-    props.ingredients[0] === undefined ||
-    props.categories[0] === undefined ||
+    allCategories === undefined ||
+    allIngredients === undefined ||
     (existingCategory[0] === undefined && !props.create)
   ) {
     return (
@@ -259,13 +279,16 @@ export const PlateForm = (props) => {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
         <h1>{props.title}</h1>
-        <label htmlFor="img" className={styles.label}>
+        <label htmlFor="plateImg" className={styles.label}>
           Imagem do prato
           <div className={styles.downloadImgDiv}>
             <DownloadIcon />
-            <p>{props.placeholder}</p>
+            <p>
+              {watchedPlateImg ? watchedPlateImg?.[0].name : props.placeholder}
+            </p>
             <input
-              id="img"
+              id="plateImg"
+              name="plateImg"
               type="file"
               className={styles.inputImg}
               {...register("plateImg")}
@@ -311,7 +334,7 @@ export const PlateForm = (props) => {
             <option disabled hidden value={0}>
               Selecione uma categoria
             </option>
-            {props.categories.map((category) => {
+            {allCategories.map((category) => {
               return (
                 <option id={category.id} key={category.id} value={category.id}>
                   {category.name}
@@ -338,7 +361,7 @@ export const PlateForm = (props) => {
             </label>
           )}
           <div className={styles.ingredientsDiv}>
-            {props.ingredients.map((ingredient) => {
+            {allIngredients.map((ingredient) => {
               return (
                 <button
                   id={
