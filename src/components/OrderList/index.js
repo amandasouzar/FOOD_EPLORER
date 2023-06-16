@@ -37,6 +37,7 @@ export const OrderList = () => {
             ...prevArray,
             {
               name: plateInfo.name,
+              img: plateInfo.image,
               quantity: item.quantity,
               price: item.price,
               id: plateInfo.id,

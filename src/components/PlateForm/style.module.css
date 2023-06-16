@@ -21,7 +21,7 @@
   color: #e1e1e6;
 }
 
-.label {
+.imgLabel, .nameLabel, .categoryLabel, .ingredientLabel, .priceLabel, .descriptionLabel {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -32,8 +32,8 @@
   color: #c4c4cc;
 }
 
-.label input,
-.label select,
+input,
+select,
 .ingredientsDiv {
   padding: 12px;
 
@@ -53,12 +53,13 @@
 
   font-weight: 500;
   font-size: 14px;
-  line-height: 24px;
+  line-height: 100%;
 
   background: #0d161b;
   border-radius: 8px;
   border: none;
   padding: 12px;
+  height: 39px;
 }
 
 input[type="file"] {
@@ -162,4 +163,29 @@ input[type="file"] {
   font-size: 14px;
   line-height: 100%;
   color: #c4c4cc;
+}
+
+@media (min-width: 1024px) {
+  .topDiv, .middleDiv, .bottomDiv {
+    display: flex;
+    flex-direction: row;
+
+    align-items: flex-end;
+    width: 100%;
+
+    gap: 32px;
+  }
+
+  .topDiv .nameLabel {
+    flex-grow: 2;
+  }
+
+  .topDiv .categoryLabel {
+    flex-grow: 2;
+  }
+
+  .bottomDiv .descriptionLabel {
+    flex-grow: 1;
+  }
+
 }

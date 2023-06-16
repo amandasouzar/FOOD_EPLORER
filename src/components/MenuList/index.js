@@ -70,6 +70,7 @@ export const MenuList = (props) => {
           {returnedPlate.map((plate) => (
             <div className={styles.plateAcess}>
               <Link to={props.isAdmin ? `/admin/${plate.id}` : `/client/${plate.id}`}>
+              <img className={styles.plateImg} src={"http://localhost:3003/images/" + plate.image}></img>
               <h2>{plate.name}</h2>
               </Link>
               <h3>{plate.description}</h3>

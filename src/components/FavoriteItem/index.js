@@ -33,7 +33,7 @@ export const FavoriteItem = (props) => {
     return <div className={styles.favoriteItemBox}>
         {plateData ? 
         <>
-        <img src='#'></img>
+        <img className={styles.plateImg} src={'http://localhost:3003/images/' + plateData.image}></img>
         <div className={styles.nameBox}>
             <div className={styles.topLine}>
                 <h2>{plateData.name}</h2>

@@ -96,6 +96,16 @@ export const PlateForm = (props) => {
         }
       } else {
         try {
+          const formData = new FormData();
+          formData.append("file", data.plateImg[0]);
+          formData.append("name", JSON.stringify(data.plateName));
+          formData.append("category_id", JSON.stringify(data.category_id));
+          formData.append("description", JSON.stringify(data.description));
+          formData.append("price", JSON.stringify(data.price));
+          formData.append("ingredientsId", JSON.stringify(addedItens));
+          formData.append("removedItens", JSON.stringify(removedItens));
+
+          console.log(data)
           const response = await postFormData(
             "http://localhost:3003/plates/update/" + props.plate_id,
             formData
@@ -279,137 +289,151 @@ export const PlateForm = (props) => {
     return (
       <form className={styles.form} onSubmit={handleSubmit(onSubmitHandler)}>
         <h1>{props.title}</h1>
-        <label htmlFor="plateImg" className={styles.label}>
-          Imagem do prato
-          <div className={styles.downloadImgDiv}>
-            <DownloadIcon />
-            <p>
-              {watchedPlateImg ? watchedPlateImg?.[0].name : props.placeholder}
-            </p>
+        <div className={styles.topDiv}>
+          <label htmlFor="plateImg" className={styles.imgLabel}>
+            Imagem do prato
+            <div className={styles.downloadImgDiv}>
+              <DownloadIcon />
+              <p>
+                {watchedPlateImg
+                  ? watchedPlateImg?.[0].name
+                  : props.placeholder}
+              </p>
+              <input
+                id="plateImg"
+                name="plateImg"
+                type="file"
+                className={styles.inputImg}
+                {...register("plateImg")}
+              ></input>
+            </div>
+            <p className={styles.error}>{errors.plateImg?.message}</p>
+          </label>
+          <label htmlFor="name" className={styles.nameLabel}>
+            Nome
             <input
-              id="plateImg"
-              name="plateImg"
-              type="file"
-              className={styles.inputImg}
-              {...register("plateImg")}
+              {...register("plateName")}
+              type="text"
+              placeholder="Ex: Salada Ceaser"
+              id="name"
+              className={styles.inputName}
+              defaultValue={plateData.plate ? plateData.plate[0].name : ""}
             ></input>
-          </div>
-          <p className={styles.error}>{errors.plateImg?.message}</p>
-        </label>
-        <label htmlFor="name" className={styles.label}>
-          Nome
-          <input
-            {...register("plateName")}
-            type="text"
-            placeholder="Ex: Salada Ceaser"
-            id="name"
-            className={styles.inputName}
-            defaultValue={plateData.plate ? plateData.plate[0].name : ""}
-          ></input>
-          <p className={styles.error}>{errors.plateName?.message}</p>
-        </label>
-        <label htmlFor="category" className={styles.label}>
-          Categoria
-          <p onClick={toggleAddCategoryButton} className={styles.add}>
-            Adicionar uma nova categoria
-          </p>
-          {openAddCategoryBox && (
-            <label className={styles.addBox} htmlFor="newCategory">
-              <input
-                ref={inputCategory}
-                id="newCategory"
-                placeholder="Insira aqui o nome"
-              ></input>
-              <button type="button" onClick={handleNewCategory}>
-                Criar
-              </button>
-            </label>
-          )}
-          <select
-            id="category"
-            className={styles.inputCategory}
-            {...register("category_id")}
-            defaultValue={props.create ? 0 : existingCategory[0].id}
-          >
-            <option disabled hidden value={0}>
-              Selecione uma categoria
-            </option>
-            {allCategories.map((category) => {
-              return (
-                <option id={category.id} key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              );
-            })}
-          </select>
-          <p className={styles.error}>{errors.category_id?.message}</p>
-        </label>
-        <label htmlFor="ingredients" className={styles.label}>
-          Ingredientes
-          <p onClick={toggleAddIngredientButton} className={styles.add}>
-            Adicionar um novo ingrediente
-          </p>
-          {openAddIngredientBox && (
-            <label className={styles.addBox}>
-              <input
-                ref={inputIngredient}
-                placeholder="Insira aqui o nome"
-              ></input>
-              <button type="button" onClick={handleNewIngredient}>
-                Criar
-              </button>
-            </label>
-          )}
-          <div className={styles.ingredientsDiv}>
-            {allIngredients.map((ingredient) => {
-              return (
-                <button
-                  id={
-                    addedItens.find((id) => id == ingredient.id) !== undefined
-                      ? styles.fullButton
-                      : styles.dashedButton
-                  }
-                  onClick={handleIngredientAdd}
-                  key={ingredient.id}
-                  value={ingredient.id}
-                >
-                  {ingredient.name}{" "}
-                  {addedItens.find((id) => id == ingredient.id) !== undefined
-                    ? "x"
-                    : "+"}
+            <p className={styles.error}>{errors.plateName?.message}</p>
+          </label>
+          <label htmlFor="category" className={styles.categoryLabel}>
+            Categoria
+            <p onClick={toggleAddCategoryButton} className={styles.add}>
+              Adicionar uma nova categoria
+            </p>
+            {openAddCategoryBox && (
+              <label className={styles.addBox} htmlFor="newCategory">
+                <input
+                  ref={inputCategory}
+                  id="newCategory"
+                  placeholder="Insira aqui o nome"
+                ></input>
+                <button type="button" onClick={handleNewCategory}>
+                  Criar
                 </button>
-              );
-            })}
-          </div>
-          {addedItens.length == 0 && (
-            <p className={styles.error}>Selecione ao menos um ingrediente.</p>
-          )}
-        </label>
-        <label htmlFor="price" className={styles.label}>
-          Preço
-          <input
-            defaultValue={plateData.plate ? plateData.plate[0].price : ""}
-            step="0.01"
-            type="number"
-            id="price"
-            placeholder="Valor em reais"
-            className={styles.inputPrice}
-            {...register("price")}
-          ></input>
-          <p className={styles.error}>{errors.price?.message}</p>
-        </label>
-        <label htmlFor="description" className={styles.label}>
-          Descrição
-          <input
-            defaultValue={plateData.plate ? plateData.plate[0].description : ""}
-            type="text"
-            id="description"
-            placeholder="Fale brevemente sobre o prato"
-            className={styles.inputDescription}
-            {...register("description")}
-          ></input>
-          <p className={styles.error}>{errors.description?.message}</p>
-        </label>
+              </label>
+            )}
+            <select
+              id="category"
+              className={styles.inputCategory}
+              {...register("category_id")}
+              defaultValue={props.create ? 0 : existingCategory[0].id}
+            >
+              <option disabled hidden value={0}>
+                Selecione uma categoria
+              </option>
+              {allCategories.map((category) => {
+                return (
+                  <option
+                    id={category.id}
+                    key={category.id}
+                    value={category.id}
+                  >
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
+            <p className={styles.error}>{errors.category_id?.message}</p>
+          </label>
+        </div>
+        <div className={styles.middleDiv}>
+          <label htmlFor="ingredients" className={styles.ingredientLabel}>
+            Ingredientes
+            <p onClick={toggleAddIngredientButton} className={styles.add}>
+              Adicionar um novo ingrediente
+            </p>
+            {openAddIngredientBox && (
+              <label className={styles.addBox}>
+                <input
+                  ref={inputIngredient}
+                  placeholder="Insira aqui o nome"
+                ></input>
+                <button type="button" onClick={handleNewIngredient}>
+                  Criar
+                </button>
+              </label>
+            )}
+            <div className={styles.ingredientsDiv}>
+              {allIngredients.map((ingredient) => {
+                return (
+                  <button
+                    id={
+                      addedItens.find((id) => id == ingredient.id) !== undefined
+                        ? styles.fullButton
+                        : styles.dashedButton
+                    }
+                    onClick={handleIngredientAdd}
+                    key={ingredient.id}
+                    value={ingredient.id}
+                  >
+                    {ingredient.name}{" "}
+                    {addedItens.find((id) => id == ingredient.id) !== undefined
+                      ? "x"
+                      : "+"}
+                  </button>
+                );
+              })}
+            </div>
+            {addedItens.length == 0 && (
+              <p className={styles.error}>Selecione ao menos um ingrediente.</p>
+            )}
+          </label>
+        </div>
+        <div className={styles.bottomDiv}>
+          <label htmlFor="price" className={styles.priceLabel}>
+            Preço
+            <input
+              defaultValue={plateData.plate ? plateData.plate[0].price : ""}
+              step="0.01"
+              type="number"
+              id="price"
+              placeholder="Valor em reais"
+              className={styles.inputPrice}
+              {...register("price")}
+            ></input>
+            <p className={styles.error}>{errors.price?.message}</p>
+          </label>
+          <label htmlFor="description" className={styles.descriptionLabel}>
+            Descrição
+            <input
+              defaultValue={
+                plateData.plate ? plateData.plate[0].description : ""
+              }
+              type="text"
+              id="description"
+              placeholder="Fale brevemente sobre o prato"
+              className={styles.inputDescription}
+              {...register("description")}
+            ></input>
+            <p className={styles.error}>{errors.description?.message}</p>
+          </label>
+        </div>
         {props.create ? (
           <CreateButton type="submit" />
         ) : (

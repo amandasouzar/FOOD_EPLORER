@@ -8,7 +8,7 @@ export const OrderItem = (props) => {
 
   return (
     <div className={styles.orderItemBox}>
-      <img src="#"></img>
+      <img className={styles.plateImg} src={'http://localhost:3003/images/' + props.item.img}></img>
       <div className={styles.infoBox}>
         <div className={styles.topLine}>
           <h2>x{props.item.quantity}</h2>

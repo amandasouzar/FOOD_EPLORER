@@ -38,11 +38,11 @@ form {
 }
 
 .label input::placeholder {
-    color: #7c7c8a;
+  color: #7c7c8a;
 }
 
 .label input:focus {
-    outline: 1px #7c7c8a;
+  outline: 1px #7c7c8a;
 }
 
 .error {
@@ -54,4 +54,30 @@ form {
   font-size: 12px;
   line-height: 100%;
   color: #c4c4cc;
+}
+
+.desktopTitle {
+  display: none;
+}
+
+@media (min-width: 800px) {
+  .formDiv {
+    padding: 64px;
+    background: #001119;
+    border-radius: 16px;
+
+    margin-top: 20vh;
+  }
+
+  .desktopTitle {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 140%;
+
+    color: #ffffff;
+
+    display: inline;
+  }
 }

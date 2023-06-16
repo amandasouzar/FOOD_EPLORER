@@ -82,7 +82,7 @@ export const InitialButtons = (props) => {
       <button
         className={styles.redButton}
         onClick={handleSubmit}
-        disabled={!props.formIsValid || !props.formWasTouched}
+        disabled={!props.formWasTouched}
       >
         {props.SignUp ? "Criar conta" : "Entrar"}
       </button>

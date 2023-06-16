@@ -2,6 +2,7 @@ import styles from "./style.module.css";
 import { PlateBox } from "../PlateBox/index.js";
 import { useEffect, useState } from "react";
 import { useReq } from "../../hooks/useReq";
+import { Link } from "react-router-dom";
 
 export const PlatesCarousel = (props) => {
   const { getReq, postReq } = useReq();
@@ -46,6 +47,14 @@ export const PlatesCarousel = (props) => {
     }
   };
 
+  platesOfCategory.forEach((category) => {
+    if (category.plates[0].name) {
+      category.plates.forEach((plate) => {
+        connectFavorites(plate.id);
+      });
+    }
+  });
+  
   useEffect(() => {
     if (props.categories.length > 0) {
       props.categories.map(async (category) => {
@@ -53,17 +62,7 @@ export const PlatesCarousel = (props) => {
       });
     }
   }, [props.categories]);
-  
-  useEffect(() => {
-    platesOfCategory.forEach((category) => {
-      if (category.plates[0].name) {
-        category.plates.forEach((plate) => {
-          connectFavorites(plate.id);
-        });
-      }
-    });
-    
-  }, [platesOfCategory])
+
 
   if (platesOfCategory.length === 0) {
     return <p>loading</p>;
@@ -73,18 +72,22 @@ export const PlatesCarousel = (props) => {
         {platesOfCategory.map((category) => {
           return (
             <>
-            {category.plates[0].name && <div className={styles.carrouselWithTitle}>
-              <h1>{category.name}</h1>
-              <div className={styles.plateCarousel}>
-                {category.plates[0].name && (
-                  category.plates.map((plate) => {
-                    return (
-                      <PlateBox admin={props.admin} plate={plate}></PlateBox>
-                    );
-                  })
-                )}
-              </div>
-            </div>}
+              {category.plates[0].name && (
+                <div className={styles.carrouselWithTitle}>
+                  <h1>{category.name}</h1>
+                  <div className={styles.plateCarousel}>
+                    {category.plates[0].name &&
+                      category.plates.map((plate) => {
+                        return (
+                          <PlateBox
+                            admin={props.admin}
+                            plate={plate}
+                          ></PlateBox>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
             </>
           );
         })}

@@ -1,5 +1,12 @@
-.menuList {
-  padding: 36px 28px 13px;
+.div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  gap: 32px;
+  flex-wrap: nowrap;
+
+  width: 100%;
 }
 
 .searchField {
@@ -11,6 +18,8 @@
   display: flex;
   align-items: center;
   gap: 15px;
+
+  flex-grow: 3;
 }
 
 .searchField button {
@@ -35,25 +44,44 @@
   outline: none;
 }
 
-.optionsField {
-  margin-top: 36px;
-}
-
-.optionsField h2 {
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 140%;
-  padding: 10px;
-
-  border-bottom: 1px solid #192227;
+.linkText {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
 
   color: #e1e1e6;
+  text-align: center;
 }
 
-.optionsField h2:hover {
+.redButton {
+  background: #750310;
+  border-radius: 5px;
+  border: none;
+
+  color: white;
+
+  padding: 12px 100px;
+}
+
+.redButton:hover,
+.linkText:hover,
+.outLogo:hover {
   cursor: pointer;
-  text-decoration: underline;
+}
+
+.linkText:hover {
+    text-decoration: underline;
+}
+
+.redButton:hover {
+    background: #b7051a;
+}
+
+.noButton {
+    background: none;
+    border: none;
 }
 
 .plateAcessBox {

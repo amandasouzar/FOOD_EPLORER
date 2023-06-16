@@ -59,3 +59,8 @@
 .infoBox button:hover {
     cursor: pointer;
 }
+
+.plateImg {
+  width: 88px;
+  height: 88px;
+}

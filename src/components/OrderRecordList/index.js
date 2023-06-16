@@ -15,7 +15,9 @@ export const OrderRecordList = () => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
-        setInfoList(jsonResponse.message)
+        if (jsonResponse.status < 400) {
+          setInfoList(jsonResponse.message)
+        }
       }
     } catch (err) {
       console.log(err);
@@ -26,6 +28,7 @@ export const OrderRecordList = () => {
     fetchOrderHistory();
   }, []);
 
+  console.log(infoList.length)
   return (
     <div className={styles.orderRecordList}>
       <h1>Pedidos</h1>
@@ -41,7 +44,7 @@ export const OrderRecordList = () => {
                 ></OrderRecordItem>
             })
           ) : (
-            <p>Não há pedidos cadastrados</p>
+            <p>Não há pedidos cadastrados.</p>
           )
         ) : (
           <p>Loading...</p>

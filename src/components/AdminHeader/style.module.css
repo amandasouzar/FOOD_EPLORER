@@ -1,4 +1,4 @@
-.header {
+.mobileHeader {
   padding: 56px 28px 24px 28px;
   display: flex;
   flex-direction: row;
@@ -9,6 +9,10 @@
 
   font-family: "Roboto", sans-serif;
   background: #001119;
+}
+
+.webHeader {
+  display: none;
 }
 
 .div {
@@ -38,4 +42,29 @@
 .MenuIcon:hover {
     cursor: pointer;
     filter: brightness(3);
+}
+
+@media (min-width: 1024px) {
+    .webHeader {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      padding: 24px 123px;
+
+      font-family: "Roboto", sans-serif;
+      background: #001119;
+    }
+
+    .div {
+      width: 30%;
+    }
+
+    .menuDiv {
+      width: 70%;
+    }
+
+    .mobileHeader {
+      display: none;
+    }
 }

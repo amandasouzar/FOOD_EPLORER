@@ -1,7 +1,8 @@
 import { InitialHeader } from "../../components/InitialHeader";
 import { InitialForm } from "../../components/InitialForm";
-import { InitialButtons } from "../../components/InitialButtons";
 import { useState } from "react";
+
+import styles from './style.module.css'
 
 export const Login = () => {
   const [formIsValid, setFormIsValid] = useState(true);
@@ -13,9 +14,9 @@ export const Login = () => {
   };
 
   return (
-    <div>
+    <div className={styles.accessDiv}>
       <InitialHeader />
-      <InitialForm
+      <InitialForm 
         SignUp={false}
         LogIn={true}
         path="/signup"

@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Snackbar } from "@mui/material";
 
+import styles from './style.module.css'
+
 export const ClientSpecificPlate = () => {
   const { plate_id } = useParams();
 
@@ -74,13 +76,13 @@ export const ClientSpecificPlate = () => {
         <BackButton />
       </Link>
       {!snackbarMessage && plateData ? (
-        <>
+        <div className={styles.plateInfo}>
           <PlateDescription
             plateData={plateData}
             plateIngredients={plateIngredients}
           />
           <OrderPlateButtons plateData={plateData}></OrderPlateButtons>
-        </>
+        </div>
       ) : (
         <Snackbar
           open={snackbarMessage ? true : false}

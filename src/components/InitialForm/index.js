@@ -84,6 +84,7 @@ export const InitialForm = (props) => {
 
   return (
     <form className={styles.formDiv}>
+      <h1 className={styles.desktopTitle}>{props.SignUp ? 'Crie sua conta' : 'Faça login'}</h1>
       {props.SignUp && (
         <label className={styles.label}>
           Seu nome
