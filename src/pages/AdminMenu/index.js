@@ -7,7 +7,7 @@ export const AdminMenu = () => {
 
   return (
     <DefaultAdmin isMenu={true}>
-      <MenuList isAdmin={true} items={[{title: 'Novo prato', link: '/admin/create', onClick: ''}, {title: 'Sair', link: '/', onClick: logout}]} />
+      <MenuList isAdmin={true} items={[{title: 'Novo prato', link: '/admin/create'}, {title: 'Sair', link: '/', onClick: logout}]} />
     </DefaultAdmin>
   );
 };

@@ -152,7 +152,7 @@ export const PlateBox = (props) => {
         <div className={styles.plateInfos}>
           <img src={'http://localhost:3003/images/' + props.plate.image}></img>
           <p onClick={handleOpenPlate}>{props.plate.name}</p>
-          <h3>R$ {props.plate.price}</h3>
+          <h3>R$ {(props.plate.price).toFixed(2)}</h3>
         </div>
         {!props.admin && (
           <div className={styles.userButtons}>

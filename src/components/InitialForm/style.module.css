@@ -60,7 +60,7 @@ form {
   display: none;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 1024px) {
   .formDiv {
     padding: 64px;
     background: #001119;

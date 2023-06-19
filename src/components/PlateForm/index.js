@@ -409,7 +409,7 @@ export const PlateForm = (props) => {
           <label htmlFor="price" className={styles.priceLabel}>
             Preço
             <input
-              defaultValue={plateData.plate ? plateData.plate[0].price : ""}
+              defaultValue={plateData.plate ? (plateData.plate[0].price).toFixed(2) : ""}
               step="0.01"
               type="number"
               id="price"

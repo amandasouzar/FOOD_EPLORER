@@ -1,4 +1,4 @@
-@media (min-width: 800px) {
+@media (min-width: 1024px) {
     .accessDiv {
       display: flex;
       flex-direction: row;

@@ -70,7 +70,7 @@ export const OrderPlateButtons = (props) => {
       <QuantityButton handleQuantity={handleQuantity} />
       <button onClick={handleAddToOrder} className={styles.orderButton}>
         <CartLogo className={styles.cartImg} />
-        <p>pedir - R${price * quantity}</p>
+        <p>pedir - R${(price * quantity).toFixed(2)}</p>
       </button>
       <Snackbar
         open={snackbarMessage ? true : false}
