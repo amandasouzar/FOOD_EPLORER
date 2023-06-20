@@ -4,28 +4,28 @@ import { RemoveIcon } from "../../assets/RemoveIcon";
 import { useEffect, useState } from "react";
 
 export const QuantityButton = (props) => {
-  const [quantity, setQuantity] = useState(1);
+  const [value, setValue] = useState(1);
 
   const handleRemove = () => {
-    if (quantity > 0) {
-      setQuantity((prevNumber) => prevNumber - 1);
+    if (value > 0) {
+      setValue((prevNumber) => prevNumber - 1);
     }
   };
 
   const handleAdd = () => {
-    setQuantity((prevNumber) => prevNumber + 1);
+    setValue((prevNumber) => prevNumber + 1);
   };
 
   useEffect(() => {
-    props.handleQuantity(quantity)
-  }, [quantity])
+    props.handleValue(value)
+  }, [value])
 
   return (
     <div className={styles.quantityButton}>
       <button onClick={handleRemove} className={styles.img}>
         <RemoveIcon />
       </button>
-      <h2>{quantity}</h2>
+      <h2>{value}</h2>
       <button onClick={handleAdd} className={styles.img}>
         <AddIcon />
       </button>

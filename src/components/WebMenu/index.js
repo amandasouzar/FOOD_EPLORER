@@ -17,7 +17,7 @@ export const WebMenu = (props) => {
 
   const { logout } = useAuth();
 
-  const inputSearch = useRef(null);
+  let inputSearch = useRef(null);
 
   const { getReq } = useReq();
 

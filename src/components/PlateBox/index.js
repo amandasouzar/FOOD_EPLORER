@@ -5,11 +5,16 @@ import { QuantityButton } from "../QuantityButton";
 import { useEffect, useState } from "react";
 import { useReq } from "../../hooks/useReq";
 import { Snackbar } from "@mui/material";
+import {useOrder} from '../../hooks/useOrder'
 
 export const PlateBox = (props) => {
-  const [quantity, setQuantity] = useState();
+  const [value, setValue] = useState(0);
   const [isFavorite, setIsFavorite] = useState();
   const [snackbarMessage, setSnackbarMessage] = useState();
+
+  const {quantity, setQuantity} = useOrder()
+
+  console.log(quantity)
 
   const { putReq, getReq, postReq } = useReq();
 
@@ -34,8 +39,8 @@ export const PlateBox = (props) => {
     }
   };
 
-  const handleQuantity = (quantity) => {
-    setQuantity(quantity);
+  const handleValue = (value) => {
+    setValue(value);
   };
 
   const handleEditClick = () => {
@@ -89,8 +94,8 @@ export const PlateBox = (props) => {
               plates: [
                 {
                   plate_id: props.plate.id,
-                  quantity,
-                  price: props.plate.price * quantity,
+                  quantity: value,
+                  price: props.plate.price * value,
                 },
               ],
             }
@@ -109,8 +114,8 @@ export const PlateBox = (props) => {
               plates: [
                 {
                   plate_id: props.plate.id,
-                  quantity,
-                  price: props.plate.price * quantity,
+                  quantity: value,
+                  price: props.plate.price * value,
                 },
               ],
             }
@@ -119,6 +124,7 @@ export const PlateBox = (props) => {
           if (!response.ok) {
             console.log(response);
           } else {
+
             const jsonResponse = await response.json();
             setSnackbarMessage(jsonResponse.message);
           }
@@ -156,7 +162,7 @@ export const PlateBox = (props) => {
         </div>
         {!props.admin && (
           <div className={styles.userButtons}>
-            <QuantityButton handleQuantity={handleQuantity} />
+            <QuantityButton handleValue={handleValue} />
             <button onClick={handleAddToOrder} className={styles.redButton}>
               Incluir
             </button>

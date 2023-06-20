@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import { useReq } from "./hooks/useReq";
+import { useOrder } from "./hooks/useOrder";
 
 import styles from "../src/style.module.css";
 import { Signup } from "./pages/SignUp";
@@ -19,6 +20,7 @@ import { Order } from "./pages/Order";
 import { OrderRecord } from "./pages/OrderRecord";
 import { Favorites } from "./pages/Favorites";
 import { NotFoundPage } from "./pages/404";
+import { OrderContext } from "./context/OrderContext";
 
 const App = () => {
   const [ingredients, setIngredients] = useState({});
@@ -73,6 +75,9 @@ const App = () => {
     }
   };
 
+  const [quantity, setQuantity] = useState()
+  
+
   useEffect(() => {
     fetchIngredients();
     fetchCategories();
@@ -80,52 +85,63 @@ const App = () => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <div className={styles.App}>
-        <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
-          {!isAdmin && (
-            <>
-              <Route
-                path="/home"
-                element={<ClientHome categories={categories} />}
-              ></Route>
-              <Route path="/order" element={<Order />}></Route>
-              <Route path="/favorites" element={<Favorites />}></Route>
-              <Route path="/history" element={<OrderRecord />}></Route>
-              <Route path="/client/menu" element={<ClientMenu />}></Route>
-              <Route
-                path="/client/:plate_id"
-                element={<ClientSpecificPlate />}
-              ></Route>
-            </>
-          )}
-          <Route
-            path="/admin/home"
-            element={<AdminHome categories={categories} />}
-          ></Route>
-          <Route path="/admin/menu" element={<AdminMenu />}></Route>
-          <Route
-            path="/admin/:plate_id"
-            element={<AdminSpecificPlate />}
-          ></Route>
-          <Route
-            path="/admin/create"
-            element={
-              <CreatePlate ingredients={ingredients} categories={categories} />
-            }
-          ></Route>
-          <Route
-            path="/admin/update/:plate_id"
-            element={
-              <UpdatePlate ingredients={ingredients} categories={categories} />
-            }
-          ></Route>
-          <Route path="*" element={<NotFoundPage isAdmin={isAdmin} />}></Route>
-        </Routes>
-      </div>
-    </AuthContext.Provider>
+    <OrderContext.Provider value={{ quantity, setQuantity }}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <div className={styles.App}>
+          <Routes>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
+            {!isAdmin && (
+              <>
+                <Route
+                  path="/home"
+                  element={<ClientHome categories={categories} />}
+                ></Route>
+                <Route path="/order" element={<Order />}></Route>
+                <Route path="/favorites" element={<Favorites />}></Route>
+                <Route path="/history" element={<OrderRecord />}></Route>
+                <Route path="/client/menu" element={<ClientMenu />}></Route>
+                <Route
+                  path="/client/:plate_id"
+                  element={<ClientSpecificPlate />}
+                ></Route>
+              </>
+            )}
+            <Route
+              path="/admin/home"
+              element={<AdminHome categories={categories} />}
+            ></Route>
+            <Route path="/admin/menu" element={<AdminMenu />}></Route>
+            <Route
+              path="/admin/:plate_id"
+              element={<AdminSpecificPlate />}
+            ></Route>
+            <Route
+              path="/admin/create"
+              element={
+                <CreatePlate
+                  ingredients={ingredients}
+                  categories={categories}
+                />
+              }
+            ></Route>
+            <Route
+              path="/admin/update/:plate_id"
+              element={
+                <UpdatePlate
+                  ingredients={ingredients}
+                  categories={categories}
+                />
+              }
+            ></Route>
+            <Route
+              path="*"
+              element={<NotFoundPage isAdmin={isAdmin} />}
+            ></Route>
+          </Routes>
+        </div>
+      </AuthContext.Provider>
+    </OrderContext.Provider>
   );
 };
 

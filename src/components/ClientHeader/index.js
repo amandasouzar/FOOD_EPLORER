@@ -7,10 +7,11 @@ import { useReq } from "../../hooks/useReq";
 import { useEffect, useState } from "react";
 
 import { WebMenu } from "../WebMenu";
+import { useOrder } from "../../hooks/useOrder";
 
-export const ClientHeader = (props) => {
+export const ClientHeader = () => {
   const { getReq } = useReq();
-  const [quantity, setQuantity] = useState(0);
+  const {quantity, setQuantity} = useOrder();
 
   const fetchQuantity = async () => {
     try {
@@ -22,11 +23,15 @@ export const ClientHeader = (props) => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
+        let updatedQuantity = 0
+
         if (jsonResponse.message.platesFromOrder.length > 0) {
           for (const plate of jsonResponse.message.platesFromOrder) {
-            setQuantity((quantity) => quantity + plate.quantity);
+            updatedQuantity += plate.quantity;
           }
         }
+
+        setQuantity(updatedQuantity)
       }
     } catch (err) {
       console.log(err);

@@ -7,13 +7,13 @@ import { useReq } from "../../hooks/useReq";
 
 export const OrderPlateButtons = (props) => {
   const price = props.plateData.price;
-  const [quantity, setQuantity] = useState();
+  const [value, setValue] = useState(0);
   const [snackbarMessage, setSnackbarMessage] = useState();
 
   const { getReq, putReq, postReq } = useReq();
 
-  const handleQuantity = (quantity) => {
-    setQuantity(quantity);
+  const handleValue = (value) => {
+    setValue(value);
   };
 
   const handleAddToOrder = async () => {
@@ -33,7 +33,7 @@ export const OrderPlateButtons = (props) => {
             "http://localhost:3003/orders/update/0/" +
               jsonResponse.message.ordersFromClient[0].id,
             {
-              plates: [{ plate_id: props.plateData.id, quantity, price }],
+              plates: [{ plate_id: props.plateData.id, value, price }],
             }
           );
 
@@ -48,7 +48,7 @@ export const OrderPlateButtons = (props) => {
           const response = await postReq(
             "http://localhost:3003/orders/create/" + admin_id,
             {
-              plates: [{ plate_id: props.plateData.id, quantity, price }],
+              plates: [{ plate_id: props.plateData.id, value, price }],
             }
           );
 
@@ -67,10 +67,10 @@ export const OrderPlateButtons = (props) => {
 
   return (
     <div className={styles.buttons}>
-      <QuantityButton handleQuantity={handleQuantity} />
+      <QuantityButton handleValue={handleValue} />
       <button onClick={handleAddToOrder} className={styles.orderButton}>
         <CartLogo className={styles.cartImg} />
-        <p>pedir - R${(price * quantity).toFixed(2)}</p>
+        <p>pedir - R${(price * value).toFixed(2)}</p>
       </button>
       <Snackbar
         open={snackbarMessage ? true : false}

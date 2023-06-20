@@ -5,7 +5,7 @@ export const OrderItem = (props) => {
     const handleDeleteItem = () => {
         props.handleDeleteItem(props.item.id)
     }
-
+    
   return (
     <div className={styles.orderItemBox}>
       <img className={styles.plateImg} src={'http://localhost:3003/images/' + props.item.img}></img>

@@ -25,6 +25,8 @@ export const OrderList = () => {
         setTotalPrice(jsonResponse.message.ordersFromClient[0].totalPrice);
         setOrderId(jsonResponse.message.ordersFromClient[0].id);
 
+        console.log(jsonResponse.message)
+
         jsonResponse.message.platesFromOrder.map(async (item) => {
           const response = await getReq(
             "http://localhost:3003/plates/get/" + item.plate_id
