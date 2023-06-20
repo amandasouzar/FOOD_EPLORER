@@ -65,7 +65,6 @@ export const WebMenu = (props) => {
             const jsonResponse = await responseForIngredient.json();
 
             if (jsonResponse.status < 400) {
-              console.log(jsonResponse.message)
               setReturnedPlate(jsonResponse.message);
             } else {
               setSnackbarMessage(jsonResponse.message);

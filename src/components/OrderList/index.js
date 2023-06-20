@@ -22,10 +22,9 @@ export const OrderList = () => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
+        
         setTotalPrice(jsonResponse.message.ordersFromClient[0].totalPrice);
         setOrderId(jsonResponse.message.ordersFromClient[0].id);
-
-        console.log(jsonResponse.message)
 
         jsonResponse.message.platesFromOrder.map(async (item) => {
           const response = await getReq(

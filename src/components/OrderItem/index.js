@@ -1,8 +1,12 @@
 import styles from "./style.module.css";
+import { useOrder } from "../../hooks/useOrder";
 
 export const OrderItem = (props) => {
 
+  const {setQuantity} = useOrder()
+
     const handleDeleteItem = () => {
+        setQuantity(prevValue => prevValue - props.item.quantity)
         props.handleDeleteItem(props.item.id)
     }
     

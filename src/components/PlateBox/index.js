@@ -5,16 +5,14 @@ import { QuantityButton } from "../QuantityButton";
 import { useEffect, useState } from "react";
 import { useReq } from "../../hooks/useReq";
 import { Snackbar } from "@mui/material";
-import {useOrder} from '../../hooks/useOrder'
+import { useOrder } from "../../hooks/useOrder";
 
 export const PlateBox = (props) => {
   const [value, setValue] = useState(0);
   const [isFavorite, setIsFavorite] = useState();
   const [snackbarMessage, setSnackbarMessage] = useState();
 
-  const {quantity, setQuantity} = useOrder()
-
-  console.log(quantity)
+  const { quantity, setQuantity } = useOrder();
 
   const { putReq, getReq, postReq } = useReq();
 
@@ -104,6 +102,7 @@ export const PlateBox = (props) => {
           if (!response.ok) {
             console.log(response);
           } else {
+            setQuantity((prevValue) => prevValue + value);
             const jsonResponse = await response.json();
             setSnackbarMessage(jsonResponse.message);
           }
@@ -124,7 +123,7 @@ export const PlateBox = (props) => {
           if (!response.ok) {
             console.log(response);
           } else {
-
+            setQuantity((prevValue) => prevValue + value);
             const jsonResponse = await response.json();
             setSnackbarMessage(jsonResponse.message);
           }
@@ -156,9 +155,9 @@ export const PlateBox = (props) => {
           )}
         </div>
         <div className={styles.plateInfos}>
-          <img src={'http://localhost:3003/images/' + props.plate.image}></img>
+          <img src={"http://localhost:3003/images/" + props.plate.image}></img>
           <p onClick={handleOpenPlate}>{props.plate.name}</p>
-          <h3>R$ {(props.plate.price).toFixed(2)}</h3>
+          <h3>R$ {props.plate.price.toFixed(2)}</h3>
         </div>
         {!props.admin && (
           <div className={styles.userButtons}>

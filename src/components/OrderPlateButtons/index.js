@@ -4,11 +4,14 @@ import { CartLogo } from "../../assets/CartLogo";
 import { useState } from "react";
 import { Snackbar } from "@mui/material";
 import { useReq } from "../../hooks/useReq";
+import { useOrder } from "../../hooks/useOrder";
 
 export const OrderPlateButtons = (props) => {
   const price = props.plateData.price;
   const [value, setValue] = useState(0);
   const [snackbarMessage, setSnackbarMessage] = useState();
+
+  const {setQuantity} = useOrder()
 
   const { getReq, putReq, postReq } = useReq();
 
@@ -33,28 +36,29 @@ export const OrderPlateButtons = (props) => {
             "http://localhost:3003/orders/update/0/" +
               jsonResponse.message.ordersFromClient[0].id,
             {
-              plates: [{ plate_id: props.plateData.id, value, price }],
+              plates: [{ plate_id: props.plateData.id, quantity: value, price }],
             }
           );
 
           if (!response.ok) {
             console.log(response);
           } else {
+            setQuantity(prevValue => prevValue + value)
             const jsonResponse = await response.json();
-            console.log(jsonResponse)
             setSnackbarMessage(jsonResponse.message);
           }
         } else {
           const response = await postReq(
             "http://localhost:3003/orders/create/" + admin_id,
             {
-              plates: [{ plate_id: props.plateData.id, value, price }],
+              plates: [{ plate_id: props.plateData.id, quantity: value, price }],
             }
           );
 
           if (!response.ok) {
             console.log(response);
           } else {
+            setQuantity(prevValue => prevValue + value)
             const jsonResponse = await response.json();
             setSnackbarMessage(jsonResponse.message);
           }
