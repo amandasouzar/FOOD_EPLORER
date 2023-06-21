@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./style.module.css";
-import { Snackbar } from "@mui/material";
+import { Alert, Snackbar, SnackbarContent } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -32,12 +32,12 @@ export const InitialButtons = (props) => {
           const jsonResponse = await response.json();
 
           if (jsonResponse.status < 400) {
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
             setTimeout(() => {
               window.location.href = "/";
             }, 3000);
           } else {
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'error'});
           }
         }
       } else {
@@ -58,7 +58,7 @@ export const InitialButtons = (props) => {
           const jsonResponse = await response.json();
 
           if (jsonResponse.token) {
-            setSnackbarMessage('Login autorizado!');
+            setSnackbarMessage({message: 'Login autorizado!', severity: 'success'});
             login(jsonResponse.token)
             setTimeout(() => {
               if (jsonResponse.isAdmin) {
@@ -68,7 +68,7 @@ export const InitialButtons = (props) => {
               }
             }, 3000);
           } else {
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'error'});
           }
         }
       }
@@ -97,8 +97,12 @@ export const InitialButtons = (props) => {
           setSnackbarMessage();
         }}
         autoHideDuration={3000}
-        message={snackbarMessage}
-      ></Snackbar>
+        anchorOrigin={{vertical: 'top', horizontal: "left"}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { CreateButton } from "../CreateButton";
 import { UpdateButtons } from "../UpdateButtons";
 
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 
 const schema = yup.object({
   plateImg: yup.mixed().required("Adicione uma imagem."),
@@ -43,7 +43,10 @@ export const PlateForm = (props) => {
   const [allCategories, setAllCategories] = useState();
   const [allIngredients, setAllIngredients] = useState();
 
-  const [snackbarmessage, setSnackbarMessage] = useState();
+  const [newCategory, setNewCategory] = useState([]);
+  const [newIngredient, setNewIngredient] = useState([]);
+
+  const [snackbarMessage, setSnackbarMessage] = useState();
 
   const inputCategory = useRef(null);
   const inputIngredient = useRef(null);
@@ -86,12 +89,12 @@ export const PlateForm = (props) => {
           const jsonResponse = await response.json();
 
           if (jsonResponse.status < 400) {
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
             setTimeout(() => {
               window.location.href = "/admin/home";
             }, 3000);
           } else {
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'error'});
           }
         }
       } else {
@@ -115,7 +118,7 @@ export const PlateForm = (props) => {
             console.log(response);
           } else {
             const jsonResponse = await response.json();
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
             setTimeout(() => {
               window.location.href = "/admin/home";
             }, 3000);
@@ -142,7 +145,7 @@ export const PlateForm = (props) => {
         setResponseStatus(jsonResponse.status);
 
         if (responseStatus >= 400 && !props.create) {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({message: jsonResponse.message, severity: 'error'});
         }
       }
     } catch (err) {
@@ -199,13 +202,15 @@ export const PlateForm = (props) => {
       if (response.ok) {
         const jsonResponse = await response.json();
         if (jsonResponse.status >= 400) {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({message: jsonResponse.message, severity: 'warning'});
         } else {
+          setNewCategory({ name: inputCategory.current.value, id: jsonResponse.id })
           setAllCategories((prevArray) => [
             ...prevArray,
             { name: inputCategory.current.value, id: jsonResponse.id },
           ]);
-          setSnackbarMessage("Categoria adicionada!");
+          setOpenAddCategoryBox(false)
+          setSnackbarMessage({message: 'Categoria adicionada!', severity: 'success'});
         }
       }
     } catch (err) {
@@ -225,13 +230,14 @@ export const PlateForm = (props) => {
       if (response.ok) {
         const jsonResponse = await response.json();
         if (jsonResponse.status >= 400) {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({message: jsonResponse.message, severity: 'warning'});
         } else {
           setAllIngredients((prevArray) => [
             ...prevArray,
             { name: inputIngredient.current.value, id: jsonResponse.id },
           ]);
-          setSnackbarMessage("Ingrediente adicionado!");
+          setOpenAddIngredientBox(false)
+          setSnackbarMessage({message: 'Ingrediente adicionado!', severity: 'success'});
         }
       }
     } catch (err) {
@@ -276,13 +282,17 @@ export const PlateForm = (props) => {
       <>
         <div className={styles.loading}>Loading...</div>;
         <Snackbar
-          open={snackbarmessage ? true : false}
-          onClose={() => {
-            setSnackbarMessage();
-          }}
-          autoHideDuration={3000}
-          message={snackbarmessage}
-        ></Snackbar>
+        open={snackbarMessage}
+        onClose={() => {
+          setSnackbarMessage();
+        }}
+        autoHideDuration={3000}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
       </>
     );
   } else {
@@ -342,7 +352,7 @@ export const PlateForm = (props) => {
               id="category"
               className={styles.inputCategory}
               {...register("category_id")}
-              defaultValue={props.create ? 0 : existingCategory[0].id}
+              defaultValue={props.create ? (newCategory.length > 0 ? newCategory[0].name :  0) : newCategory.length > 0 ? newCategory[0].name : existingCategory[0].id}
             >
               <option disabled hidden value={0}>
                 Selecione uma categoria
@@ -439,14 +449,18 @@ export const PlateForm = (props) => {
         ) : (
           <UpdateButtons plateData={plateData} plate_id={props.plate_id} />
         )}
-        <Snackbar
-          open={snackbarmessage ? true : false}
-          onClose={() => {
-            setSnackbarMessage();
-          }}
-          autoHideDuration={3000}
-          message={snackbarmessage}
-        ></Snackbar>
+      <Snackbar
+        open={snackbarMessage}
+        onClose={() => {
+          setSnackbarMessage();
+        }}
+        autoHideDuration={3000}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
       </form>
     );
   }

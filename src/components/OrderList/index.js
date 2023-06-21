@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 import { OrderItem } from "../OrderItem";
 import { useReq } from "../../hooks/useReq";
 import { useEffect, useState } from "react";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 
 export const OrderList = () => {
   const { getReq, deleteReq, putReq } = useReq();
@@ -22,7 +22,7 @@ export const OrderList = () => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
-        
+
         setTotalPrice(jsonResponse.message.ordersFromClient[0].totalPrice);
         setOrderId(jsonResponse.message.ordersFromClient[0].id);
 
@@ -62,11 +62,14 @@ export const OrderList = () => {
       } else {
         const jsonResponse = await response.json();
         if (jsonResponse.status < 400) {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({
+            message: jsonResponse.message,
+            severity: "success",
+          });
           setCartItems((prevArray) =>
             prevArray.filter((item) => item.id !== itemId)
           );
-          setTotalPrice(jsonResponse.newPrice)
+          setTotalPrice(jsonResponse.newPrice);
         }
       }
     } catch (err) {
@@ -74,27 +77,35 @@ export const OrderList = () => {
     }
   };
 
-  const handleCloseOrder = async() => {
+  const handleCloseOrder = async () => {
     try {
-        const response = await putReq('http://localhost:3003/orders/close/' + orderId)
+      const response = await putReq(
+        "http://localhost:3003/orders/close/" + orderId
+      );
 
-        if (!response.ok) {
-            console.log(response)
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        const jsonResponse = await response.json();
+        if (jsonResponse.status < 400) {
+          setSnackbarMessage({
+            message: jsonResponse.message,
+            severity: "success",
+          });
+          setTimeout(() => {
+            window.location.href = "/history";
+          }, 3000);
         } else {
-            const jsonResponse = await response.json()
-            if (jsonResponse.status < 400) {
-                setSnackbarMessage(jsonResponse.message)
-                setTimeout(() => {
-                    window.location.href = '/history'
-                }, 3000);
-            } else {
-                setSnackbarMessage(jsonResponse.message)
-            }
+          setSnackbarMessage({
+            message: jsonResponse.message,
+            severity: "error",
+          });
         }
+      }
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   useEffect(() => {
     fetchOrderItems();
@@ -132,12 +143,14 @@ export const OrderList = () => {
             <p>Carrinho vazio!</p>
           )}
         </div>
-          {cartItems.length > 0 && (
-            <>
-              <h2 className={styles.price}>Total: R${totalPrice.toFixed(2)}</h2>
-              <button className={styles.redButton} onClick={handleCloseOrder}>Avançar</button>
-            </>
-          )}
+        {cartItems.length > 0 && (
+          <>
+            <h2 className={styles.price}>Total: R${totalPrice.toFixed(2)}</h2>
+            <button className={styles.redButton} onClick={handleCloseOrder}>
+              Avançar
+            </button>
+          </>
+        )}
       </div>
       <Snackbar
         open={snackbarMessage}
@@ -145,8 +158,12 @@ export const OrderList = () => {
           setSnackbarMessage();
         }}
         autoHideDuration={3000}
-        message={snackbarMessage}
-      ></Snackbar>
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

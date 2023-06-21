@@ -11,7 +11,7 @@ import { useOrder } from "../../hooks/useOrder";
 
 export const ClientHeader = () => {
   const { getReq } = useReq();
-  const {quantity, setQuantity} = useOrder();
+  const { quantity, setQuantity } = useOrder();
 
   const fetchQuantity = async () => {
     try {
@@ -23,7 +23,7 @@ export const ClientHeader = () => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
-        let updatedQuantity = 0
+        let updatedQuantity = 0;
 
         if (jsonResponse.message.platesFromOrder.length > 0) {
           for (const plate of jsonResponse.message.platesFromOrder) {
@@ -31,7 +31,7 @@ export const ClientHeader = () => {
           }
         }
 
-        setQuantity(updatedQuantity)
+        setQuantity(updatedQuantity);
       }
     } catch (err) {
       console.log(err);
@@ -48,7 +48,7 @@ export const ClientHeader = () => {
         <Link to="/client/menu">
           <MenuIcon className={styles.MenuIcon} />
         </Link>
-        <div className={styles.titleDiv}>
+        <div className={styles.titleDiv} onClick={() => {window.location.href='/home'}}>
           <LogoHexagon />
           <h2 className={styles.title}>food explorer</h2>
         </div>
@@ -60,15 +60,18 @@ export const ClientHeader = () => {
         </Link>
       </header>
       <header className={styles.webHeader}>
-        <div className={styles.div}>
-          <LogoHexagon />
-          <h2 className={styles.title}>food explorer</h2>
-        </div>
+          <div className={styles.div} onClick={() => {window.location.href='/home'}}>
+            <LogoHexagon />
+            <h2 className={styles.title}>food explorer</h2>
+          </div>
         <WebMenu
           className={styles.menuDiv}
           buttonText={`Pedidos (${quantity})`}
           link={"/order"}
-          otherLinks={[{ text: "Meus favoritos", href: "/favorites" }, {text: 'Histórico de pedidos', href: '/history'}]}
+          otherLinks={[
+            { text: "Meus favoritos", href: "/favorites" },
+            { text: "Histórico de pedidos", href: "/history" },
+          ]}
         />
       </header>
     </>

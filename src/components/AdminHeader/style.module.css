@@ -25,6 +25,10 @@
   justify-content: center;
 }
 
+.div:hover {
+  cursor: pointer;
+}
+
 .menuIcon {
   flex-grow: 1;
 }

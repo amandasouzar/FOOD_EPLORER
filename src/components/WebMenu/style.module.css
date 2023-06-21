@@ -9,6 +9,10 @@
   width: 100%;
 }
 
+.form {
+  flex-grow: 3;
+}
+
 .searchField {
   background: #0d1d25;
   border-radius: 5px;
@@ -18,8 +22,6 @@
   display: flex;
   align-items: center;
   gap: 15px;
-
-  flex-grow: 3;
 }
 
 .searchField button {
@@ -72,25 +74,31 @@
 }
 
 .linkText:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .redButton:hover {
-    background: #b7051a;
+  background: #b7051a;
 }
 
 .noButton {
-    background: none;
-    border: none;
+  background: none;
+  border: none;
 }
 
 .plateAcessBox {
   margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+  justify-content: center;
   text-align: center;
+}
+
+.plateAcess {
+  max-width: 150px;
 }
 
 .plateAcess h2 {

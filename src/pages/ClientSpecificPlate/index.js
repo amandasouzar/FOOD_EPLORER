@@ -7,9 +7,9 @@ import { useReq } from "../../hooks/useReq";
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 
-import styles from './style.module.css'
+import styles from "./style.module.css";
 
 export const ClientSpecificPlate = () => {
   const { plate_id } = useParams();
@@ -20,7 +20,7 @@ export const ClientSpecificPlate = () => {
 
   const [snackbarMessage, setSnackbarMessage] = useState();
 
-  const {getReq} = useReq()
+  const { getReq } = useReq();
 
   const fetchDataFromPlate = async () => {
     try {
@@ -36,7 +36,10 @@ export const ClientSpecificPlate = () => {
           setPlateData(jsonResponse.message.plate[0]);
           setIngredientsId(jsonResponse.message.ingredients);
         } else {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({
+            message: jsonResponse.message,
+            severity: "error",
+          });
         }
       }
     } catch (err) {
@@ -93,8 +96,12 @@ export const ClientSpecificPlate = () => {
             }, 3000);
           }}
           autoHideDuration={3000}
-          message={snackbarMessage}
-        ></Snackbar>
+          anchorOrigin={{ horizontal: "left", vertical: "top" }}
+        >
+          <Alert severity={snackbarMessage && snackbarMessage.severity}>
+            {snackbarMessage && snackbarMessage.message}
+          </Alert>
+        </Snackbar>
       )}
     </DefaultClient>
   );

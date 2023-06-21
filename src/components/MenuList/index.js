@@ -2,19 +2,20 @@ import styles from "./style.module.css";
 import { SearchLogo } from "../../assets/SearchLogo";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
-import { Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import { useReq } from "../../hooks/useReq";
 
 export const MenuList = (props) => {
   const inputSearch = useRef(null);
 
-  const {getReq} = useReq()
+  const { getReq } = useReq();
 
   const [returnedPlate, setReturnedPlate] = useState();
   const [snackbarMessage, setSnackbarMessage] = useState();
 
-  const handleSearch = async () => {
-    setReturnedPlate()
+  const handleSearch = async (event) => {
+    setReturnedPlate();
+    event.preventDefault()
 
     try {
       const responseForName = await getReq(
@@ -29,7 +30,10 @@ export const MenuList = (props) => {
         if (jsonResponse.status < 400) {
           setReturnedPlate(jsonResponse.message);
         } else {
-          setSnackbarMessage(jsonResponse.message);
+          setSnackbarMessage({
+            message: jsonResponse.message,
+            severity: "warning",
+          });
 
           const responseForIngredient = await getReq(
             `http://localhost:3003/plates/filter?ingredient_name=${inputSearch.current.value}`
@@ -42,7 +46,10 @@ export const MenuList = (props) => {
             if (jsonResponse.status < 400) {
               setReturnedPlate(jsonResponse.message);
             } else {
-              setSnackbarMessage(jsonResponse.message);
+              setSnackbarMessage({
+                message: jsonResponse.message,
+                severity: "warning",
+              });
             }
           }
         }
@@ -54,24 +61,33 @@ export const MenuList = (props) => {
 
   return (
     <div className={styles.menuList}>
-      <label className={styles.searchField}>
-        <button type="button" onClick={handleSearch}>
-          <SearchLogo className={styles.searchLogo}></SearchLogo>
-        </button>
-        <input
-          className={styles.inputField}
-          type="text"
-          ref={inputSearch}
-          placeholder="Busque por pratos ou ingredientes"
-        ></input>
-      </label>
+      <form onSubmit={handleSearch}>
+        <label className={styles.searchField}>
+          <input
+            className={styles.inputField}
+            type="text"
+            ref={inputSearch}
+            placeholder="Busque por pratos ou ingredientes"
+          ></input>
+          <button>
+            <SearchLogo className={styles.searchLogo}></SearchLogo>
+          </button>
+        </label>
+      </form>
       {returnedPlate && (
         <div className={styles.plateAcessBox}>
           {returnedPlate.map((plate) => (
             <div className={styles.plateAcess}>
-              <Link to={props.isAdmin ? `/admin/${plate.id}` : `/client/${plate.id}`}>
-              <img className={styles.plateImg} src={"http://localhost:3003/images/" + plate.image}></img>
-              <h2>{plate.name}</h2>
+              <Link
+                to={
+                  props.isAdmin ? `/admin/${plate.id}` : `/client/${plate.id}`
+                }
+              >
+                <img
+                  className={styles.plateImg}
+                  src={"http://localhost:3003/images/" + plate.image}
+                ></img>
+                <h2>{plate.name}</h2>
               </Link>
               <h3>{plate.description}</h3>
             </div>
@@ -93,8 +109,12 @@ export const MenuList = (props) => {
           setSnackbarMessage();
         }}
         autoHideDuration={3000}
-        message={snackbarMessage}
-      ></Snackbar>
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

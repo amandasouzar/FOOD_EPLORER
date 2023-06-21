@@ -52,6 +52,10 @@
   filter: brightness(3);
 }
 
+.titleDiv:hover, .div:hover {
+  cursor: pointer;
+}
+
 @media (min-width: 1024px) {
     .webHeader {
       display: flex;

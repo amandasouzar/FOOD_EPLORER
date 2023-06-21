@@ -54,3 +54,7 @@
   width: 88px;
   height: 88px;
 }
+
+.plateImg:hover {
+  cursor: pointer;
+}

@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 import { QuantityButton } from "../QuantityButton";
 import { CartLogo } from "../../assets/CartLogo";
 import { useState } from "react";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import { useReq } from "../../hooks/useReq";
 import { useOrder } from "../../hooks/useOrder";
 
@@ -45,7 +45,7 @@ export const OrderPlateButtons = (props) => {
           } else {
             setQuantity(prevValue => prevValue + value)
             const jsonResponse = await response.json();
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
           }
         } else {
           const response = await postReq(
@@ -60,7 +60,7 @@ export const OrderPlateButtons = (props) => {
           } else {
             setQuantity(prevValue => prevValue + value)
             const jsonResponse = await response.json();
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
           }
         }
       }
@@ -77,13 +77,17 @@ export const OrderPlateButtons = (props) => {
         <p>pedir - R${(price * value).toFixed(2)}</p>
       </button>
       <Snackbar
-        open={snackbarMessage ? true : false}
+        open={snackbarMessage}
         onClose={() => {
           setSnackbarMessage();
         }}
         autoHideDuration={3000}
-        message={snackbarMessage}
-      ></Snackbar>
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

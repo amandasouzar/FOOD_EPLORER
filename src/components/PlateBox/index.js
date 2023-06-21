@@ -4,7 +4,7 @@ import { FavoriteIcon } from "../../assets/FavoriteIcon";
 import { QuantityButton } from "../QuantityButton";
 import { useEffect, useState } from "react";
 import { useReq } from "../../hooks/useReq";
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import { useOrder } from "../../hooks/useOrder";
 
 export const PlateBox = (props) => {
@@ -104,7 +104,7 @@ export const PlateBox = (props) => {
           } else {
             setQuantity((prevValue) => prevValue + value);
             const jsonResponse = await response.json();
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
           }
         } else {
           const response = await postReq(
@@ -125,7 +125,7 @@ export const PlateBox = (props) => {
           } else {
             setQuantity((prevValue) => prevValue + value);
             const jsonResponse = await response.json();
-            setSnackbarMessage(jsonResponse.message);
+            setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
           }
         }
       }
@@ -174,8 +174,12 @@ export const PlateBox = (props) => {
           setSnackbarMessage();
         }}
         autoHideDuration={3000}
-        message={snackbarMessage}
-      ></Snackbar>
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

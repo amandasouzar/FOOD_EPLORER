@@ -33,7 +33,7 @@ export const FavoriteItem = (props) => {
     return <div className={styles.favoriteItemBox}>
         {plateData ? 
         <>
-        <img className={styles.plateImg} src={'http://localhost:3003/images/' + plateData.image}></img>
+        <img className={styles.plateImg} src={'http://localhost:3003/images/' + plateData.image} onClick={() => {window.location.href=`/client/${plateData.id}`}}></img>
         <div className={styles.nameBox}>
             <div className={styles.topLine}>
                 <h2>{plateData.name}</h2>

@@ -1,5 +1,5 @@
 import styles from './style.module.css'
-import { Snackbar } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import { useState } from 'react';
 import { useReq } from '../../hooks/useReq';
 
@@ -18,7 +18,7 @@ export const UpdateButtons = (props) => {
                 console.log(response)
             } else {
                 const jsonResponse = await response.json()
-                setSnackbarMessage(jsonResponse.message)
+                setSnackbarMessage({message: jsonResponse.message, severity: 'success'});
                 setTimeout(() => {
                     window.location.href = '/admin/home'
                 }, 3000)
@@ -32,12 +32,16 @@ export const UpdateButtons = (props) => {
         <button type='button' className={styles.deleteButton} onClick={handleDeletePlate}>Excluir prato</button>
         <button className={styles.updateButton}>Salvar alterações</button>
         <Snackbar
-          open={snackbarMessage ? true : false}
-          onClose={() => {
-            setSnackbarMessage();
-          }}
-          autoHideDuration={3000}
-          message={snackbarMessage}
-        ></Snackbar>
+        open={snackbarMessage}
+        onClose={() => {
+          setSnackbarMessage();
+        }}
+        autoHideDuration={3000}
+        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+      >
+        <Alert severity={snackbarMessage && snackbarMessage.severity}>
+          {snackbarMessage && snackbarMessage.message}
+        </Alert>
+      </Snackbar>
     </div>
 }
