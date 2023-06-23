@@ -1,76 +1,108 @@
 .homeTop {
-  padding: 36px 8px 22px 150px;
   white-space: normal;
+  position: relative;
 
   text-align: left;
+
+  margin-top: 70px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  padding: 36px 8px 22px 150px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background: linear-gradient(180deg, #091e26 0%, #00131c 100%);
+  border-radius: 2.91696px;
 }
 
 .text h1 {
   font-size: 18px;
+
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%;
+
+  color: #e1e1e6;
 }
 
 .text h2 {
   font-size: 12px;
+
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+
+  color: #e1e1e6;
 }
 
 .image {
   position: absolute;
-  width: 200px;
-  right: 70%;
-  top: 10%;
+  bottom: 0;
+  top: -50px;
+  left: 0;
+  width: 170px;
 }
 
-@media (min-width: 1024px) {
-  .homeTop {
-    margin-top: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
-  
-    padding: 88px 100px 116px 590px;
-  
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  
-    white-space: nowrap;
-  
-    background: linear-gradient(180deg, #091e26 0%, #00131c 100%);
-    border-radius: 2.91696px;
+.image img {
+  width: 100%;
+  height: 100%;
+}
 
-    position: relative;
+@media (min-width: 750px) {
+  .homeTop {
+    white-space: normal;
+  
+    text-align: left;
+  
+    padding: 36px 8px 22px 150px;
+  }
+  
+  .text h1 {
+    font-size: 18px;
+  }
+  
+  .text h2 {
+    font-size: 12px;
   }
   
   .image {
     position: absolute;
-    bottom: 0
-  }
-  
-  .image img {
-    opacity: 0.5;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .text h1 {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 140%;
-  
-    color: #e1e1e6;
-  }
-  
-  .text h2 {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 140%;
-  
-    color: #e1e1e6;
+    bottom: 0;
+    top: -50px;
+    left: 0;
+    width: 300px;
   }
 }
 
+@media (min-width: 1024px) {
+  .homeTop {
+    padding: 88px 100px 116px 590px;
+
+    white-space: nowrap;
+  }
+
+  .image {
+    position: absolute;
+    bottom: 0;
+    top: -50px;
+    left: 0;
+    width: 550px;
+  }
+
+  .text h1 {
+    font-size: 40px;
+    line-height: 140%;
+  }
+
+  .text h2 {
+    font-size: 16px;
+    line-height: 140%;
+  }
+}
