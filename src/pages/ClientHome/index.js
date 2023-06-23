@@ -1,6 +1,6 @@
 import { DefaultClient } from "../DefaultClient";
 import { PlatesCarousel } from "../../components/PlatesCarousel";
-import image from '../../assets/Macarons.png'
+import image from '../../assets/pngegg 2.png'
 
 import styles from "./style.module.css";
 

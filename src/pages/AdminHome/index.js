@@ -1,7 +1,7 @@
 import { DefaultAdmin } from "../DefaultAdmin";
 import { PlatesCarousel } from "../../components/PlatesCarousel";
 import styles from "./style.module.css";
-import image from "../../assets/Macarons.png";
+import image from "../../assets/pngegg 2.png";
 
 export const AdminHome = (props) => {
   return (

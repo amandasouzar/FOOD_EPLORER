@@ -1,9 +1,14 @@
 .homeTop {
-  margin-top: 30px;
+  white-space: normal;
+  position: relative;
+
+  text-align: left;
+
+  margin-top: 70px;
   margin-left: 20px;
   margin-right: 20px;
 
-  padding: 88px 100px 116px 590px;
+  padding: 36px 8px 22px 150px;
 
   display: flex;
   flex-direction: row;
@@ -11,72 +16,93 @@
   align-items: center;
   text-align: center;
 
-  white-space: nowrap;
-
   background: linear-gradient(180deg, #091e26 0%, #00131c 100%);
   border-radius: 2.91696px;
 }
 
-.image {
-  position: absolute;
-  right: 55%;
-
-  width: 450px;
-}
-
-.image img {
-  opacity: 0.5;
-  width: 100%;
-  height: 100%;
-}
-
 .text h1 {
+  font-size: 18px;
+
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 600;
-  font-size: 40px;
   line-height: 140%;
 
   color: #e1e1e6;
 }
 
 .text h2 {
+  font-size: 12px;
+
   font-family: "Poppins", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
   line-height: 140%;
 
   color: #e1e1e6;
 }
 
-@media (max-width: 1024px) {
-  .homeTop  {
-      padding: 36px 8px 22px 150px;
-      white-space: normal;
+.image {
+  position: absolute;
+  bottom: 0;
+  top: -50px;
+  left: 0;
+  width: 170px;
+}
 
-      text-align: left;
+.image img {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 750px) {
+  .homeTop {
+    white-space: normal;
+  
+    text-align: left;
+  
+    padding: 36px 8px 22px 150px;
   }
-
+  
   .text h1 {
-      font-size: 18px;
+    font-size: 18px;
   }
-
+  
   .text h2 {
-      font-size: 12px;
+    font-size: 12px;
   }
-
+  
   .image {
-      width: 200px;
-      right: 70%;
-      top: 14%;
+    position: absolute;
+    bottom: 0;
+    top: -50px;
+    left: 0;
+    width: 300px;
   }
 }
 
-@media (max-width: 600px) {
+@media (min-width: 1024px) {
+  .homeTop {
+    padding: 88px 100px 116px 590px;
+
+    white-space: nowrap;
+  }
+
   .image {
-      width: 150px;
-      right: 70%;
-      top: 22%;
+    position: absolute;
+    bottom: 0;
+    top: -50px;
+    left: 0;
+    width: 550px;
+  }
+
+  .text h1 {
+    font-size: 40px;
+    line-height: 140%;
+  }
+
+  .text h2 {
+    font-size: 16px;
+    line-height: 140%;
   }
 }

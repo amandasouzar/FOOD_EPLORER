@@ -75,7 +75,7 @@ const App = () => {
     }
   };
 
-  const [quantity, setQuantity] = useState()
+  const [quantity, setQuantity] = useState(0)
   
 
   useEffect(() => {

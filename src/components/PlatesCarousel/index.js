@@ -2,12 +2,12 @@ import styles from "./style.module.css";
 import { PlateBox } from "../PlateBox/index.js";
 import { useEffect, useState } from "react";
 import { useReq } from "../../hooks/useReq";
-import { Link } from "react-router-dom";
 
 export const PlatesCarousel = (props) => {
   const { getReq, postReq } = useReq();
 
   const [platesOfCategory, setPlatesOfCategory] = useState([]);
+  const [platesList, setPlatesList] = useState([]);
 
   const fetchPlatesFromCategory = async (category) => {
     try {
@@ -25,6 +25,11 @@ export const PlatesCarousel = (props) => {
             plates: jsonResponse.message,
           })
         );
+        if (jsonResponse.status < 400) {
+          jsonResponse.message.map((plateInfo) =>
+            connectFavorites(plateInfo.id)
+          );
+        }
       }
     } catch (err) {
       console.log(err);
@@ -47,14 +52,6 @@ export const PlatesCarousel = (props) => {
     }
   };
 
-  platesOfCategory.forEach((category) => {
-    if (category.plates[0].name) {
-      category.plates.forEach((plate) => {
-        connectFavorites(plate.id);
-      });
-    }
-  });
-  
   useEffect(() => {
     if (props.categories.length > 0) {
       props.categories.map(async (category) => {
@@ -63,6 +60,12 @@ export const PlatesCarousel = (props) => {
     }
   }, [props.categories]);
 
+  // useEffect(() => {
+  //   if (platesList.length > 0) {
+  //     console.log(platesList)
+  //     platesList.map(id => connectFavorites(id))
+  //   }
+  // }, [platesList])
 
   if (platesOfCategory.length === 0) {
     return <p>loading</p>;
