@@ -142,25 +142,42 @@ export const WebMenu = (props) => {
               onKeyUp={(event) => {
                 if (event.key === "Enter") {
                   handleSearch(event.target.value);
-                  
                 }
               }}
               clearOnBlur
               id="combo-box-demo"
-              options={options.map((option) => option.name)}
+              options={
+                options
+                  ? options.filter(option => option.name !== undefined)?.map((option) => {
+                    if (option.name) {
+                        return option.name;
+                      } 
+                    })
+                  : "Não há opções cadastradas"
+              }
               groupBy={(option) => {
-                const isPlate = returnedPlates.filter(
-                  (plate) => plate.name === option
-                );
-                const isIngredient = returnedIngredients.filter(
-                  (plate) => plate.name === option
-                );
+                if (!option) {
+                  return "Nenhum resultado encontrado";
+                } else {
+                  if (typeof returnedPlates !== "string") {
+                    const isPlate = returnedPlates?.filter(
+                      (plate) => plate.name === option
+                    );
 
-                if (isPlate.length > 0) {
-                  return "Pratos";
-                }
-                if (isIngredient.length > 0) {
-                  return "Ingredientes";
+                    if (isPlate.length > 0) {
+                      return "Pratos";
+                    }
+                  }
+
+                  if (typeof returnedIngredients !== "string") {
+                    const isIngredient = returnedIngredients?.filter(
+                      (plate) => plate.name === option
+                    );
+
+                    if (isIngredient.length > 0) {
+                      return "Ingredientes";
+                    }
+                  }
                 }
               }}
               renderInput={(params) => (

@@ -62,7 +62,6 @@ export const PlatesCarousel = (props) => {
   if (platesOfCategory.length === 0 && !props.categories) {
     return <p>loading</p>;
   } else {
-    console.log(platesOfCategory)
     return (
       <>
         {platesOfCategory.length > 0 ?
