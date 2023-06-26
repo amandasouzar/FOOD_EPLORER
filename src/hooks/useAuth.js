@@ -36,7 +36,6 @@ export const useAuth = () => {
   }, []);
 
   const login = (user) => {
-    console.log(user);
     addUser(user);
   };
 

@@ -28,7 +28,6 @@ export const OrderRecordList = () => {
     fetchOrderHistory();
   }, []);
 
-  console.log(infoList.length)
   return (
     <div className={styles.orderRecordList}>
       <h1>Pedidos</h1>

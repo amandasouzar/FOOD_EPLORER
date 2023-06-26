@@ -217,7 +217,6 @@ export const PlateForm = (props) => {
             severity: "warning",
           });
         } else {
-          console.log(jsonResponse)
           setAllCategories((prevArray) => [
             ...prevArray,
             { name: inputCategory.current.value, id: jsonResponse.information.id },
