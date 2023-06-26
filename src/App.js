@@ -84,7 +84,7 @@ const App = () => {
     fetchIngredients();
     fetchCategories();
     checkIsAdmin();
-  }, []);
+  });
 
   return (
     <OrderContext.Provider value={{ quantity, setQuantity }}>
