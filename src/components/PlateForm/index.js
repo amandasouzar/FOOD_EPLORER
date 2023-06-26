@@ -44,7 +44,6 @@ export const PlateForm = (props) => {
   const [allIngredients, setAllIngredients] = useState();
 
   const [newCategory, setNewCategory] = useState();
-  const [selectedCategory, setSelectedCategory] = useState();
 
   const [snackbarMessage, setSnackbarMessage] = useState();
 
@@ -187,7 +186,7 @@ export const PlateForm = (props) => {
       setAddedItens((prevArray) => [...prevArray, +event.target.value]);
     } else {
       setAddedItens((prevArray) =>
-        prevArray.filter((id) => id != +event.target.value)
+        prevArray.filter((id) => id !== +event.target.value)
       );
       setRemovedItens((prevArray) => [...prevArray, +event.target.value]);
     }
@@ -218,10 +217,10 @@ export const PlateForm = (props) => {
             severity: "warning",
           });
         } else {
-          setNewCategory(jsonResponse.information);
+          console.log(jsonResponse)
           setAllCategories((prevArray) => [
             ...prevArray,
-            { name: inputCategory.current.value, id: jsonResponse.id },
+            { name: inputCategory.current.value, id: jsonResponse.information.id },
           ]);
           setOpenAddCategoryBox(false);
           setSnackbarMessage({
@@ -274,11 +273,6 @@ export const PlateForm = (props) => {
     setAllIngredients(ingredients);
   };
 
-  useEffect(() => {
-    if (newCategory) {
-      setSelectedCategory(newCategory.id);
-    }
-  }, [newCategory]);
 
   useEffect(() => {
     fetchDataFromPlate();
@@ -386,28 +380,23 @@ export const PlateForm = (props) => {
                 id="category"
                 className={styles.inputCategory}
                 {...register("category_id")}
-                defaultValue={
-                  selectedCategory
-                    ? selectedCategory
-                    : props.create
-                    ? 0
-                    : existingCategory[0].id
-                }
+                defaultValue={props.create ? 0 : existingCategory[0].id}
               >
                 <option disabled hidden value={0}>
                   Selecione uma categoria
                 </option>
-                {typeof allCategories !== "string" && allCategories?.map((category) => {
-                  return (
-                    <option
-                      id={category.id}
-                      key={category.id}
-                      value={category.id}
-                    >
-                      {category.name}
-                    </option>
-                  );
-                })}
+                {typeof allCategories !== "string" &&
+                  allCategories?.map((category) => {
+                    return (
+                      <option
+                        id={category.id}
+                        key={category.id}
+                        value={category.id}
+                      >
+                        {category.name}
+                      </option>
+                    );
+                  })}
               </select>
             )}
             <p className={styles.error}>{errors.category_id?.message}</p>
@@ -454,10 +443,10 @@ export const PlateForm = (props) => {
                   );
                 })}
               </div>
-              )}
-              {addedItens.length == 0 && (
-                <p className={styles.error}>Selecione ao menos um ingrediente.</p>
-                )}
+            )}
+            {addedItens.length == 0 && (
+              <p className={styles.error}>Selecione ao menos um ingrediente.</p>
+            )}
           </label>
         </div>
         <div className={styles.bottomDiv}>

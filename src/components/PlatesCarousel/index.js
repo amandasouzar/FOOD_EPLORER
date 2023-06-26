@@ -62,9 +62,11 @@ export const PlatesCarousel = (props) => {
   if (platesOfCategory.length === 0 && !props.categories) {
     return <p>loading</p>;
   } else {
-    return (
+    const hasPlates = platesOfCategory.filter(category => typeof category.plates !== 'string')
+
+      return (
       <>
-        {platesOfCategory.length > 0 ?
+        {platesOfCategory.length > 0 && hasPlates.length > 0  ?
           <div className={styles.platesList}>
             {platesOfCategory.map((category) => {
               return (
@@ -89,7 +91,7 @@ export const PlatesCarousel = (props) => {
               );
             })}
           </div>
-        : <h1 className={styles.errorMessage} onClick={() => {if (props.admin) {window.location.href='/admin/create'}}}>{props.admin ? "Crie aqui um prato!" : 'Não há pratos'}</h1>}
+        : <h1 className={styles.errorMessage} onClick={() => {if (props.admin) {window.location.href='/admin/create'}}}>{props.admin ? "Crie aqui um prato!" : 'Não há pratos!'}</h1>}
       </>
     );
   }
