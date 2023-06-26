@@ -40,8 +40,6 @@ Senha: ADMINADMIN
 
 Esse projeto foi deployado utilizando o Vercel, para acesso basta utilizar o link abaixo:
 
-PS: Tenha um pouco de paciência, ele pode demorar! :D
-
 ```bash
 food-explorer-seven.vercel.app
 ```
