@@ -3,7 +3,7 @@
 
 Nessa aplicação, simulamos um site feito para um restaurante e seus clientes. Nele, você poderá, como cliente, tanto realizar pedidos, favoritar pratos, ver seu histórico de pedidos e adicionar ou excluir do seu carrinho. Já como admin, você pode criar um novo prato e editar pratos já criados, além de excluir-los a qualquer momento. 
 
-Também é possivel pesquisar pratos, seja pelo seu nome ou pelo seus ingredientes, no campo de busca oferecido. Ademais, sinta-se livre para adicionar novos ingredientes e novas categorias, na página de criação ou atual;ização de pratos!
+Também é possivel pesquisar pratos, seja pelo seu nome ou pelo seus ingredientes, no campo de busca oferecido. Ademais, sinta-se livre para adicionar novos ingredientes e novas categorias, na página de criação ou atualização de pratos!
 
 
 ## Como rodar este projeto?
@@ -39,6 +39,8 @@ Senha: ADMINADMIN
 ## Deploy
 
 Esse projeto foi deployado utilizando o Vercel, para acesso basta utilizar o link abaixo:
+
+PS: Tenha um pouco de paciência, ele pode demorar! :D
 
 ```bash
 food-explorer-seven.vercel.app
