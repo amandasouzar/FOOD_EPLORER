@@ -13,7 +13,7 @@ export const InitialButtons = (props) => {
 
     try {
       if (props.SignUp) {
-        const response = await fetch("https://food-explorer-api-amanda2.onrender.com/signup", {
+        const response = await fetch(process.env.BASE_URL + "/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const InitialButtons = (props) => {
           }
         }
       } else {
-        const response = await fetch("https://food-explorer-api-amanda2.onrender.com/session", {
+        const response = await fetch(process.env.BASE_URL + "/session", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
