@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import { useReq } from "./hooks/useReq";
-import { useOrder } from "./hooks/useOrder";
 
 import styles from "../src/style.module.css";
 import { Signup } from "./pages/SignUp";
@@ -31,7 +30,7 @@ const App = () => {
 
   const fetchIngredients = async () => {
     try {
-      const response = await getReq("http://localhost:3003/ingredients/getAll");
+      const response = await getReq("/ingredients/getAll");
 
       if (!response.ok) {
         console.log("Something went wrong");
@@ -48,7 +47,7 @@ const App = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await getReq("http://localhost:3003/categories/getAll");
+      const response = await getReq("/categories/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -66,7 +65,7 @@ const App = () => {
   const { user, setUser } = useAuth();
   const checkIsAdmin = async () => {
     try {
-      const response = await getReq("http://localhost:3003/session/check");
+      const response = await getReq("/session/check");
 
       if (!response.ok) {
         console.log(response);

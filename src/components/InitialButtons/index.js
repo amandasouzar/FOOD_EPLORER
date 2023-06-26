@@ -12,7 +12,7 @@ export const InitialButtons = (props) => {
     event.preventDefault();
 
     try {
-      console.log(process.env)
+      console.log(process.env.REACT_APP_BASE_URL)
       if (props.SignUp) {
         const response = await fetch(process.env.REACT_APP_BASE_URL + "/signup", {
           method: "POST",

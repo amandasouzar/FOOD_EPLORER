@@ -9,7 +9,7 @@ export const FavoriteItem = (props) => {
 
     const getPlate = async() => {
         try {
-            const response = await getReq('http://localhost:3003/plates/get/' + props.plate.plate_id)
+            const response = await getReq('/plates/get/' + props.plate.plate_id)
 
             if (!response.ok) {
                 console.log(response)
