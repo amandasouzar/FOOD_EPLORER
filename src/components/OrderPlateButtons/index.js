@@ -24,7 +24,7 @@ export const OrderPlateButtons = (props) => {
 
     try {
       const orderExists = await getReq(
-        "http://localhost:3003/orders/clientOrders"
+        "/orders/clientOrders"
       );
 
       if (!orderExists.ok) {
@@ -33,7 +33,7 @@ export const OrderPlateButtons = (props) => {
         const jsonResponse = await orderExists.json();
         if (jsonResponse.status < 400) {
           const response = await putReq(
-            "http://localhost:3003/orders/update/0/" +
+            "/orders/update/0/" +
               jsonResponse.message.ordersFromClient[0].id,
             {
               plates: [{ plate_id: props.plateData.id, quantity: value, price }],
@@ -49,7 +49,7 @@ export const OrderPlateButtons = (props) => {
           }
         } else {
           const response = await postReq(
-            "http://localhost:3003/orders/create/" + admin_id,
+            "/orders/create/" + admin_id,
             {
               plates: [{ plate_id: props.plateData.id, quantity: value, price }],
             }

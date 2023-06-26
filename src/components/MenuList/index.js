@@ -28,7 +28,7 @@ export const MenuList = (props) => {
 
   const getAllPlates = async () => {
     try {
-      const response = await getReq("http://localhost:3003/plates/getAll");
+      const response = await getReq("/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -43,7 +43,7 @@ export const MenuList = (props) => {
 
   const getAllIngredients = async () => {
     try {
-      const response = await getReq("http://localhost:3003/ingredients/getAll");
+      const response = await getReq("/ingredients/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -60,7 +60,7 @@ export const MenuList = (props) => {
     setReturnedPlate();
     try {
       const responseForName = await getReq(
-        `http://localhost:3003/plates/filter?plate_name=${value}`
+        `/plates/filter?plate_name=${value}`
       );
 
       if (!responseForName.ok) {
@@ -77,7 +77,7 @@ export const MenuList = (props) => {
           });
 
           const responseForIngredient = await getReq(
-            `http://localhost:3003/plates/filter?ingredient_name=${value}`
+            `/plates/filter?ingredient_name=${value}`
           );
           if (!responseForIngredient.ok) {
             console.log(responseForIngredient);
@@ -177,7 +177,7 @@ export const MenuList = (props) => {
               >
                 <img
                   className={styles.plateImg}
-                  src={"http://localhost:3003/images/" + plate.image}
+                  src={process.env.REACT_APP_BASE_URL + "/images/" + plate.image}
                   alt="Imagem do prato"
                 ></img>
                 <h2>{plate.name}</h2>

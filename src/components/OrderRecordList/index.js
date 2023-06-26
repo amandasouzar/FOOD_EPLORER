@@ -9,7 +9,7 @@ export const OrderRecordList = () => {
 
   const fetchOrderHistory = async () => {
     try {
-      const response = await getReq("http://localhost:3003/orders/history");
+      const response = await getReq("/orders/history");
 
       if (!response.ok) {
         console.log(response);

@@ -40,7 +40,7 @@ export const WebMenu = (props) => {
 
   const getAllPlates = async () => {
     try {
-      const response = await getReq("http://localhost:3003/plates/getAll");
+      const response = await getReq("/plates/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -55,7 +55,7 @@ export const WebMenu = (props) => {
 
   const getAllIngredients = async () => {
     try {
-      const response = await getReq("http://localhost:3003/ingredients/getAll");
+      const response = await getReq("/ingredients/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -81,7 +81,7 @@ export const WebMenu = (props) => {
 
     try {
       const responseForName = await getReq(
-        `http://localhost:3003/plates/filter?plate_name=${value}`
+        `/plates/filter?plate_name=${value}`
       );
 
       if (!responseForName.ok) {
@@ -98,7 +98,7 @@ export const WebMenu = (props) => {
           });
 
           const responseForIngredient = await getReq(
-            `http://localhost:3003/plates/filter?ingredient_name=${value}`
+            `/plates/filter?ingredient_name=${value}`
           );
           if (!responseForIngredient.ok) {
             console.log(responseForIngredient);
@@ -246,8 +246,9 @@ export const WebMenu = (props) => {
                       }
                     >
                       <img
+                        alt="Imagem do prato"
                         className={styles.plateImg}
-                        src={"http://localhost:3003/images/" + plate.image}
+                        src={process.env.REACT_APP_BASE_URL + "/images/" + plate.image}
                       ></img>
                       <h2>{plate.name}</h2>
                     </Link>

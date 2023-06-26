@@ -78,7 +78,7 @@ export const PlateForm = (props) => {
     try {
       if (props.create) {
         const response = await postFormData(
-          "http://localhost:3003/plates/create",
+          "/plates/create",
           formData
         );
 
@@ -114,7 +114,7 @@ export const PlateForm = (props) => {
           formData.append("removedItens", JSON.stringify(removedItens));
 
           const response = await postFormData(
-            "http://localhost:3003/plates/update/" + props.plate_id,
+            "/plates/update/" + props.plate_id,
             formData
           );
 
@@ -142,7 +142,7 @@ export const PlateForm = (props) => {
   const fetchDataFromPlate = async () => {
     try {
       const response = await getReq(
-        "http://localhost:3003/plates/get/" + props.plate_id
+        "/plates/get/" + props.plate_id
       );
       if (!response.ok) {
         console.log("Something went wrong");
@@ -165,7 +165,7 @@ export const PlateForm = (props) => {
 
   const fetchCategory = async (id) => {
     try {
-      const response = await getReq("http://localhost:3003/categories/" + id);
+      const response = await getReq("/categories/" + id);
       if (!response.ok) {
         console.log("Something went wrong");
       } else {
@@ -203,7 +203,7 @@ export const PlateForm = (props) => {
   const handleNewCategory = async () => {
     try {
       const response = await postReq(
-        "http://localhost:3003/categories/create",
+        "/categories/create",
         {
           name: inputCategory.current.value,
         }
@@ -237,7 +237,7 @@ export const PlateForm = (props) => {
   const handleNewIngredient = async () => {
     try {
       const response = await postReq(
-        "http://localhost:3003/ingredients/create",
+        "/ingredients/create",
         {
           name: inputIngredient.current.value,
         }

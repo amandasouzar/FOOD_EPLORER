@@ -12,7 +12,7 @@ export const UpdateButtons = (props) => {
     const handleDeletePlate = async() => {
 
         try {
-            const response = await deleteReq('http://localhost:3003/plates/delete/' + props.plate_id)
+            const response = await deleteReq('/plates/delete/' + props.plate_id)
 
             if (!response.ok) {
                 console.log(response)

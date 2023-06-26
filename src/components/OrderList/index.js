@@ -15,7 +15,7 @@ export const OrderList = () => {
   const fetchOrderItems = async () => {
     try {
       const response = await getReq(
-        "http://localhost:3003/orders/clientOrders"
+        "/orders/clientOrders"
       );
 
       if (!response.ok) {
@@ -28,7 +28,7 @@ export const OrderList = () => {
 
         jsonResponse.message.platesFromOrder.map(async (item) => {
           const response = await getReq(
-            "http://localhost:3003/plates/get/" + item.plate_id
+            "/plates/get/" + item.plate_id
           );
 
           const jsonResponse = await response.json();
@@ -54,7 +54,7 @@ export const OrderList = () => {
   const handleDeleteItem = async (itemId) => {
     try {
       const response = await deleteReq(
-        "http://localhost:3003/orders/delete/" + orderId + "/" + itemId
+        "/orders/delete/" + orderId + "/" + itemId
       );
 
       if (!response.ok) {
@@ -80,7 +80,7 @@ export const OrderList = () => {
   const handleCloseOrder = async () => {
     try {
       const response = await putReq(
-        "http://localhost:3003/orders/close/" + orderId
+        "/orders/close/" + orderId
       );
 
       if (!response.ok) {

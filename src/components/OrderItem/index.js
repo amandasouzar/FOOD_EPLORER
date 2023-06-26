@@ -12,7 +12,7 @@ export const OrderItem = (props) => {
     
   return (
     <div className={styles.orderItemBox}>
-      <img className={styles.plateImg} src={'http://localhost:3003/images/' + props.item.img} onClick={() => {window.location.href=`/client/${props.item.id}`}}></img>
+      <img className={styles.plateImg} alt="Imagem do prato" src={process.env.REACT_APP.BASE.URL + '/images/' + props.item.img} onClick={() => {window.location.href=`/client/${props.item.id}`}}></img>
       <div className={styles.infoBox}>
         <div className={styles.topLine}>
           <h2>x{props.item.quantity}</h2>

@@ -11,7 +11,7 @@ export const PlatesCarousel = (props) => {
   const fetchPlatesFromCategory = async (category) => {
     try {
       const response = await getReq(
-        "http://localhost:3003/plates/category/" + category.id
+        "/plates/category/" + category.id
       );
 
       if (!response.ok) {
@@ -38,7 +38,7 @@ export const PlatesCarousel = (props) => {
   const connectFavorites = async (plate_id) => {
     try {
       const response = await postReq(
-        "http://localhost:3003/favorites/connect/" + plate_id
+        "/favorites/connect/" + plate_id
       );
 
       if (!response.ok) {

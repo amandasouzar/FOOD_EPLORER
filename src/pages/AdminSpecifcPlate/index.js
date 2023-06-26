@@ -23,7 +23,7 @@ export const AdminSpecificPlate = () => {
   const fetchDataFromPlate = async () => {
     try {
       const response = await getReq(
-        "http://localhost:3003/plates/get/" + plate_id
+        "/plates/get/" + plate_id
       );
 
       if (!response.ok) {
@@ -47,7 +47,7 @@ export const AdminSpecificPlate = () => {
 
   const findIngredients = async (id) => {
     try {
-      const response = await getReq("http://localhost:3003/ingredients/" + id);
+      const response = await getReq("/ingredients/" + id);
 
       if (!response.ok) {
         console.log(response);

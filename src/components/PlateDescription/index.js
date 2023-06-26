@@ -8,7 +8,7 @@ export const PlateDescription = (props) => {
       <div className={styles.plateInfo}>
         <img
           className={styles.plateImg}
-          src={"http://localhost:3003/images/" + props.plateData.image}
+          src={process.env.REACT_APP_BASE_URL + "/images/" + props.plateData.image}
           alt="Teste"
         />
         <div>

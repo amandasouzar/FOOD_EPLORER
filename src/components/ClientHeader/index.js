@@ -16,7 +16,7 @@ export const ClientHeader = () => {
   const fetchQuantity = async () => {
     try {
       const response = await getReq(
-        "http://localhost:3003/orders/clientOrders"
+        "/orders/clientOrders"
       );
 
       if (!response.ok) {

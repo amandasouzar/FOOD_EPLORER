@@ -19,7 +19,7 @@ export const PlateBox = (props) => {
   const fetchIsFavorite = async () => {
     try {
       const response = await getReq(
-        "http://localhost:3003/favorites/verify/" + props.plate.id
+        "/favorites/verify/" + props.plate.id
       );
 
       if (!response.ok) {
@@ -48,7 +48,7 @@ export const PlateBox = (props) => {
   const handleFavoriteClick = async () => {
     try {
       const response = await putReq(
-        "http://localhost:3003/favorites/update/" + props.plate.id
+        "/favorites/update/" + props.plate.id
       );
 
       if (!response.ok) {
@@ -77,7 +77,7 @@ export const PlateBox = (props) => {
 
     try {
       const orderExists = await getReq(
-        "http://localhost:3003/orders/clientOrders"
+        "/orders/clientOrders"
       );
 
       if (!orderExists.ok) {
@@ -86,7 +86,7 @@ export const PlateBox = (props) => {
         const jsonResponse = await orderExists.json();
         if (jsonResponse.status < 400) {
           const response = await putReq(
-            "http://localhost:3003/orders/update/0/" +
+            "/orders/update/0/" +
               jsonResponse.message.ordersFromClient[0].id,
             {
               plates: [
@@ -108,7 +108,7 @@ export const PlateBox = (props) => {
           }
         } else {
           const response = await postReq(
-            "http://localhost:3003/orders/create/" + admin_id,
+            "/orders/create/" + admin_id,
             {
               plates: [
                 {
@@ -155,7 +155,7 @@ export const PlateBox = (props) => {
           )}
         </div>
         <div className={styles.plateInfos}>
-          <img src={"http://localhost:3003/images/" + props.plate.image}></img>
+          <img alt="Imagem do prato" src={process.env.REACT_APP_BASE_URL + "/images/" + props.plate.image}></img>
           <p onClick={handleOpenPlate}>{props.plate.name}</p>
           <h3>R$ {props.plate.price.toFixed(2)}</h3>
         </div>

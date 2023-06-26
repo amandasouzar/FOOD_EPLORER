@@ -10,7 +10,7 @@ export const Favoritelist = () => {
 
   const fetchFavorites = async () => {
     try {
-      const response = await getReq("http://localhost:3003/favorites/getAll");
+      const response = await getReq("/favorites/getAll");
 
       if (!response.ok) {
         console.log(response);
@@ -30,7 +30,7 @@ export const Favoritelist = () => {
   const handleDeleteFavorite = async (plateId) => {
     try {
       const response = await putReq(
-        "http://localhost:3003/favorites/update/" + plateId
+        "/favorites/update/" + plateId
       );
 
       if (!response.ok) {

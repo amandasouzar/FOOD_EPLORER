@@ -25,7 +25,7 @@ export const OrderRecordItem = (props) => {
   const fetchPlateData = async (plate_id) => {
     try {
       const response = await getReq(
-        "http://localhost:3003/plates/get/" + plate_id
+        "/plates/get/" + plate_id
       );
 
       if (!response.ok) {
