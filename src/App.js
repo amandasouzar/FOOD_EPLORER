@@ -23,8 +23,8 @@ import { NotFoundPage } from "./pages/404";
 import { OrderContext } from "./context/OrderContext";
 
 const App = () => {
-  const [ingredients, setIngredients] = useState({});
-  const [categories, setCategories] = useState({});
+  const [ingredients, setIngredients] = useState();
+  const [categories, setCategories] = useState();
   const [isAdmin, setIsAdmin] = useState();
 
   const { getReq } = useReq();
@@ -37,7 +37,9 @@ const App = () => {
         console.log("Something went wrong");
       } else {
         const jsonResponse = await response.json();
-        setIngredients(jsonResponse.message);
+        if (jsonResponse.status < 400) {
+          setIngredients(jsonResponse.message);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -52,7 +54,9 @@ const App = () => {
         console.log(response);
       } else {
         const jsonResponse = await response.json();
-        setCategories(jsonResponse.message);
+        if (jsonResponse.status < 400) {
+          setCategories(jsonResponse.message);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -75,13 +79,13 @@ const App = () => {
     }
   };
 
-  const [quantity, setQuantity] = useState(0)
-  
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     fetchIngredients();
     fetchCategories();
     checkIsAdmin();
+    console.log(categories);
   }, []);
 
   return (

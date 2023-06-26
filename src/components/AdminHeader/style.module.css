@@ -4,9 +4,6 @@
   flex-direction: row;
   align-items: center;
 
-  /* gap: 50px; */
-  /* justify-content: flex-start; */
-
   font-family: "Roboto", sans-serif;
   background: #001119;
 }
@@ -55,7 +52,7 @@
     filter: brightness(3);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1400px) {
     .webHeader {
       display: flex;
       flex-direction: row;

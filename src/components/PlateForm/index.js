@@ -114,7 +114,6 @@ export const PlateForm = (props) => {
           formData.append("ingredientsId", JSON.stringify(addedItens));
           formData.append("removedItens", JSON.stringify(removedItens));
 
-          console.log(data);
           const response = await postFormData(
             "http://localhost:3003/plates/update/" + props.plate_id,
             formData
@@ -219,7 +218,6 @@ export const PlateForm = (props) => {
             severity: "warning",
           });
         } else {
-          console.log(jsonResponse);
           setNewCategory(jsonResponse.information);
           setAllCategories((prevArray) => [
             ...prevArray,
@@ -278,11 +276,8 @@ export const PlateForm = (props) => {
 
   useEffect(() => {
     if (newCategory) {
-      console.log("entrei 1");
       setSelectedCategory(newCategory.id);
     }
-
-    console.log(selectedCategory);
   }, [newCategory]);
 
   useEffect(() => {
@@ -300,6 +295,8 @@ export const PlateForm = (props) => {
     }
 
     if (
+      props.categories &&
+      props.ingredients &&
       props.categories[0] !== undefined &&
       props.ingredients[0] !== undefined
     ) {
@@ -309,8 +306,8 @@ export const PlateForm = (props) => {
 
   if (
     !plateData ||
-    allCategories === undefined ||
-    allIngredients === undefined ||
+    (allCategories === undefined && typeof props.categories !== "string") ||
+    (allIngredients === undefined && typeof props.categories !== "string") ||
     (existingCategory[0] === undefined && !props.create)
   ) {
     return (
@@ -348,7 +345,7 @@ export const PlateForm = (props) => {
                 id="plateImg"
                 name="plateImg"
                 type="file"
-                accept="image/*" 
+                accept="image/*"
                 className={styles.inputImg}
                 {...register("plateImg")}
               ></input>
@@ -384,27 +381,35 @@ export const PlateForm = (props) => {
                 </button>
               </label>
             )}
-            <select
-              id="category"
-              className={styles.inputCategory}
-              {...register("category_id")}
-              defaultValue={selectedCategory ? selectedCategory : props.create ? 0 : existingCategory[0].id}
-            >
-              <option disabled hidden value={0}>
-                Selecione uma categoria
-              </option>
-              {allCategories.map((category) => {
-                return (
-                  <option
-                    id={category.id}
-                    key={category.id}
-                    value={category.id}
-                  >
-                    {category.name}
-                  </option>
-                );
-              })}
-            </select>
+            {allCategories && (
+              <select
+                id="category"
+                className={styles.inputCategory}
+                {...register("category_id")}
+                defaultValue={
+                  selectedCategory
+                    ? selectedCategory
+                    : props.create
+                    ? 0
+                    : existingCategory[0].id
+                }
+              >
+                <option disabled hidden value={0}>
+                  Selecione uma categoria
+                </option>
+                {typeof allCategories !== "string" && allCategories?.map((category) => {
+                  return (
+                    <option
+                      id={category.id}
+                      key={category.id}
+                      value={category.id}
+                    >
+                      {category.name}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
             <p className={styles.error}>{errors.category_id?.message}</p>
           </label>
         </div>
@@ -425,30 +430,34 @@ export const PlateForm = (props) => {
                 </button>
               </label>
             )}
-            <div className={styles.ingredientsDiv}>
-              {allIngredients.map((ingredient) => {
-                return (
-                  <button
-                    id={
-                      addedItens.find((id) => id == ingredient.id) !== undefined
-                        ? styles.fullButton
-                        : styles.dashedButton
-                    }
-                    onClick={handleIngredientAdd}
-                    key={ingredient.id}
-                    value={ingredient.id}
-                  >
-                    {ingredient.name}{" "}
-                    {addedItens.find((id) => id == ingredient.id) !== undefined
-                      ? "x"
-                      : "+"}
-                  </button>
-                );
-              })}
-            </div>
-            {addedItens.length == 0 && (
-              <p className={styles.error}>Selecione ao menos um ingrediente.</p>
-            )}
+            {typeof allCategories !== "string" && (
+              <div className={styles.ingredientsDiv}>
+                {allIngredients?.map((ingredient) => {
+                  return (
+                    <button
+                      id={
+                        addedItens.find((id) => id == ingredient.id) !==
+                        undefined
+                          ? styles.fullButton
+                          : styles.dashedButton
+                      }
+                      onClick={handleIngredientAdd}
+                      key={ingredient.id}
+                      value={ingredient.id}
+                    >
+                      {ingredient.name}{" "}
+                      {addedItens.find((id) => id == ingredient.id) !==
+                      undefined
+                        ? "x"
+                        : "+"}
+                    </button>
+                  );
+                })}
+              </div>
+              )}
+              {addedItens.length == 0 && (
+                <p className={styles.error}>Selecione ao menos um ingrediente.</p>
+                )}
           </label>
         </div>
         <div className={styles.bottomDiv}>

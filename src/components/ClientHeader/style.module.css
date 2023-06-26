@@ -56,7 +56,7 @@
   cursor: pointer;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1400px) {
     .webHeader {
       display: flex;
       flex-direction: row;

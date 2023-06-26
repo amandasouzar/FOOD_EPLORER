@@ -9,41 +9,8 @@
   width: 100%;
 }
 
-.form {
-  flex-grow: 3;
-}
-
 .searchField {
-  background: #0d1d25;
-  border-radius: 5px;
-  height: 48px;
-  padding: 12px 14px;
-
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.searchField button {
-  background: none;
-  border: none;
-}
-
-.searchLogo:hover {
-  cursor: pointer;
-}
-
-.inputField {
-  background: #0d1d25;
-  border: none;
-  color: white;
-
-  width: 100%;
-  height: 48px;
-}
-
-.inputField:focus {
-  outline: none;
+  flex-grow: 3;
 }
 
 .linkText {

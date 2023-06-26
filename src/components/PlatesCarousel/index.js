@@ -7,7 +7,6 @@ export const PlatesCarousel = (props) => {
   const { getReq, postReq } = useReq();
 
   const [platesOfCategory, setPlatesOfCategory] = useState([]);
-  const [platesList, setPlatesList] = useState([]);
 
   const fetchPlatesFromCategory = async (category) => {
     try {
@@ -53,48 +52,46 @@ export const PlatesCarousel = (props) => {
   };
 
   useEffect(() => {
-    if (props.categories.length > 0) {
+    if (props.categories && props.categories[0].id) {
       props.categories.map(async (category) => {
         await fetchPlatesFromCategory(category);
       });
     }
   }, [props.categories]);
 
-  // useEffect(() => {
-  //   if (platesList.length > 0) {
-  //     console.log(platesList)
-  //     platesList.map(id => connectFavorites(id))
-  //   }
-  // }, [platesList])
-
-  if (platesOfCategory.length === 0) {
+  if (platesOfCategory.length === 0 && !props.categories) {
     return <p>loading</p>;
   } else {
+    console.log(platesOfCategory)
     return (
-      <div className={styles.platesList}>
-        {platesOfCategory.map((category) => {
-          return (
-            <>
-              {category.plates[0].name && (
-                <div className={styles.carrouselWithTitle}>
-                  <h1>{category.name}</h1>
-                  <div className={styles.plateCarousel}>
-                    {category.plates[0].name &&
-                      category.plates.map((plate) => {
-                        return (
-                          <PlateBox
-                            admin={props.admin}
-                            plate={plate}
-                          ></PlateBox>
-                        );
-                      })}
-                  </div>
-                </div>
-              )}
-            </>
-          );
-        })}
-      </div>
+      <>
+        {platesOfCategory.length > 0 ?
+          <div className={styles.platesList}>
+            {platesOfCategory.map((category) => {
+              return (
+                <>
+                  {category.plates[0].name && (
+                    <div className={styles.carrouselWithTitle}>
+                      <h1>{category.name}</h1>
+                      <div className={styles.plateCarousel}>
+                        {category.plates[0].name &&
+                          category.plates.map((plate) => {
+                            return (
+                              <PlateBox
+                                admin={props.admin}
+                                plate={plate}
+                              ></PlateBox>
+                            );
+                          })}
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+            })}
+          </div>
+        : <h1 className={styles.errorMessage} onClick={() => {if (props.admin) {window.location.href='/admin/create'}}}>{props.admin ? "Crie aqui um prato!" : 'Não há pratos'}</h1>}
+      </>
     );
   }
 };

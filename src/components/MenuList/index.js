@@ -1,25 +1,66 @@
 import styles from "./style.module.css";
-import { SearchLogo } from "../../assets/SearchLogo";
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { useReq } from "../../hooks/useReq";
+import {
+  Autocomplete,
+  TextField,
+  Stack,
+} from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 export const MenuList = (props) => {
-  const inputSearch = useRef(null);
 
   const { getReq } = useReq();
 
   const [returnedPlate, setReturnedPlate] = useState();
   const [snackbarMessage, setSnackbarMessage] = useState();
+  const [returnedPlates, setReturnedPlates] = useState();
+  const [options, setOptions] = useState();
+  const [returnedIngredients, setReturnedIngredients] = useState();
 
-  const handleSearch = async (event) => {
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+  const getAllPlates = async () => {
+    try {
+      const response = await getReq("http://localhost:3003/plates/getAll");
+
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        const jsonResponse = await response.json();
+        setReturnedPlates(jsonResponse.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getAllIngredients = async () => {
+    try {
+      const response = await getReq("http://localhost:3003/ingredients/getAll");
+
+      if (!response.ok) {
+        console.log(response);
+      } else {
+        const jsonResponse = await response.json();
+        setReturnedIngredients(jsonResponse.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSearch = async (value) => {
     setReturnedPlate();
-    event.preventDefault()
-
     try {
       const responseForName = await getReq(
-        `http://localhost:3003/plates/filter?plate_name=${inputSearch.current.value}`
+        `http://localhost:3003/plates/filter?plate_name=${value}`
       );
 
       if (!responseForName.ok) {
@@ -36,7 +77,7 @@ export const MenuList = (props) => {
           });
 
           const responseForIngredient = await getReq(
-            `http://localhost:3003/plates/filter?ingredient_name=${inputSearch.current.value}`
+            `http://localhost:3003/plates/filter?ingredient_name=${value}`
           );
           if (!responseForIngredient.ok) {
             console.log(responseForIngredient);
@@ -59,21 +100,54 @@ export const MenuList = (props) => {
     }
   };
 
+  useEffect(() => {
+    getAllPlates();
+    getAllIngredients();
+  }, []);
+
+  useEffect(() => {
+    if (returnedPlates && returnedIngredients) {
+      setOptions([...returnedPlates, ...returnedIngredients]);
+    }
+  }, [returnedIngredients, returnedPlates]);
+  
   return (
     <div className={styles.menuList}>
-      <form onSubmit={handleSearch}>
-        <label className={styles.searchField}>
-          <input
-            className={styles.inputField}
-            type="text"
-            ref={inputSearch}
-            placeholder="Busque por pratos ou ingredientes"
-          ></input>
-          <button>
-            <SearchLogo className={styles.searchLogo}></SearchLogo>
-          </button>
-        </label>
-      </form>
+       {options && <ThemeProvider theme={darkTheme}>
+          <Stack className={styles.searchField} spacing={2}>
+            <Autocomplete
+              sx={{ width: "100%" }}
+              onKeyUp={(event) => {
+                if (event.key === "Enter") {
+                  handleSearch(event.target.value);
+                }
+              }}
+              id="combo-box-demo"
+              options={options.map((option) => option.name)}
+              groupBy={(option) => {
+                const isPlate = returnedPlates.filter(
+                  (plate) => plate.name === option
+                );
+                const isIngredient = returnedIngredients.filter(
+                  (plate) => plate.name === option
+                );
+
+                if (isPlate.length > 0) {
+                  return "Pratos";
+                }
+                if (isIngredient.length > 0) {
+                  return "Ingredientes";
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Busque por pratos ou ingredientes"
+                />
+              )}
+            />
+          </Stack>
+        </ThemeProvider>}
       {returnedPlate && (
         <div className={styles.plateAcessBox}>
           {returnedPlate.map((plate) => (

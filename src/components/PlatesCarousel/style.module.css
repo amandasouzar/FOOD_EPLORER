@@ -57,3 +57,23 @@
 
   color: #e1e1e6;
 }
+
+.errorMessage {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 24px;
+
+  margin-top: 100px;
+
+  width: 100%;
+  text-align: center;
+  text-decoration: underline;
+
+  color: #e1e1e6;
+}
+
+.errorMessage:hover {
+  cursor: pointer;
+}
