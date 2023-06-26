@@ -28,7 +28,7 @@ export const MenuList = (props) => {
 
   const getAllPlates = async () => {
     try {
-      const response = await getReq("/getAll");
+      const response = await getReq("/plates/getAll");
 
       if (!response.ok) {
         console.log(response);
