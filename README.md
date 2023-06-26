@@ -22,6 +22,8 @@ npm install
 npm start
 ```
 
+#### Ou utilize o link disponibilizado do Deploy!
+
 ## Como acessar o perfil de Admin?
 
 #### Essa aplicação conta com um perfil único de Admin, já cadastrado. Para acessar, basta utilizar os dados a seguir (atenção as maiusculas!): 
