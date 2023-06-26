@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./style.module.css";
-import { Alert, Snackbar, SnackbarContent } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -13,7 +13,7 @@ export const InitialButtons = (props) => {
 
     try {
       if (props.SignUp) {
-        const response = await fetch("http://localhost:3003/signup", {
+        const response = await fetch("https://food-explorer-api-amanda2.onrender.com/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const InitialButtons = (props) => {
           }
         }
       } else {
-        const response = await fetch("http://localhost:3003/session", {
+        const response = await fetch("https://food-explorer-api-amanda2.onrender.com/session", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
