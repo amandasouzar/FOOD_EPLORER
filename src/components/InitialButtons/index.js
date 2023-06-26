@@ -12,8 +12,9 @@ export const InitialButtons = (props) => {
     event.preventDefault();
 
     try {
+      console.log(process.env)
       if (props.SignUp) {
-        const response = await fetch(process.env.BASE_URL + "/signup", {
+        const response = await fetch(process.env.REACT_APP_BASE_URL + "/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -41,7 +42,7 @@ export const InitialButtons = (props) => {
           }
         }
       } else {
-        const response = await fetch(process.env.BASE_URL + "/session", {
+        const response = await fetch(process.env.REACT_APP_BASE_URL + "/session", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
